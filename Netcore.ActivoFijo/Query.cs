@@ -621,7 +621,7 @@ namespace Netcore.ActivoFijo
 
         #region SectorActividadEconomica
 
-        internal static IQueryable<Netcore.ActivoFijo.Model.SectorActividadEconomica> GetSectorActividadEconomicas(Netcore.ActivoFijo.Model.Context context,int actividad)
+        internal static IQueryable<Netcore.ActivoFijo.Model.SectorActividadEconomica> GetSectorActividadEconomicas(Netcore.ActivoFijo.Model.Context context, int actividad)
         {
             return
                 from sectorActividadEconomica in context.SectorActividadEconomicas
@@ -706,7 +706,12 @@ namespace Netcore.ActivoFijo
                 from tipoAlmacen in context.TipoAlmacens
                 select tipoAlmacen;
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.TipoAlmacen> GetOneTipoAlmacenes(Netcore.ActivoFijo.Model.Context context, string uuid)
+        {
+            Guid guidUuid = Guid.Parse(uuid);
+            return  context.TipoAlmacens.Where(tipoAlmacen => tipoAlmacen.Id == guidUuid);
 
+        }
         #endregion
 
         #region TipoCuentaEstadoResultado
