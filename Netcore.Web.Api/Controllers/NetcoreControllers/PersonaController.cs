@@ -82,7 +82,29 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     PersonaDTO.RunDigito.ToString(),
                     PersonaDTO.Nombres, 
                     PersonaDTO.ApellidoPaterno,
-                    PersonaDTO.SexoCodigo);
+                    PersonaDTO.SexoCodigo,
+                    PersonaDTO.ApellidoMaterno,
+                    PersonaDTO.Email,
+                    PersonaDTO.NacionalidadCodigo,
+                    PersonaDTO.EstadoCivilCodigo,
+                    PersonaDTO.NivelEducacionalCodigo,
+                    PersonaDTO.RegionCodigo,
+                    PersonaDTO.CiudadCodigo,
+                    PersonaDTO.ComunaCodigo,
+                    PersonaDTO.RegionNacimientoCodigo,
+                    PersonaDTO.CiudadNacimientoCodigo,
+                    PersonaDTO.ComunaNacimientoCodigo,
+                    PersonaDTO.VillaPoblacion,
+                    PersonaDTO.Direccion,
+                    PersonaDTO.Telefono,
+                    PersonaDTO.Celular,
+                    PersonaDTO.Observaciones,
+                    PersonaDTO.Ocupacion,
+                    PersonaDTO.TelefonoLaboral,
+                    PersonaDTO.DireccionLaboral,
+                    PersonaDTO.AreaGeograficaCodigo,
+                    PersonaDTO.NroDepartamento
+                    );
 
                 PersonaDTO dto = business.Adapt<PersonaDTO>();
 
