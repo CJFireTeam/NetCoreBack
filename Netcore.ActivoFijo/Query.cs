@@ -539,7 +539,12 @@ namespace Netcore.ActivoFijo
                 from persona in context.Personas
                 select persona;
         }
-
+        internal static IQueryable<Netcore.ActivoFijo.Model.Persona> GetPersonasPaginated(Netcore.ActivoFijo.Model.Context context,int page,int elementsPerPage)
+        {
+    return context.Personas
+        .Skip((page - 1) * elementsPerPage)
+        .Take(elementsPerPage);
+        }
         #endregion
 
         #region PostTitulo

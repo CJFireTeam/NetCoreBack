@@ -46,10 +46,11 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<PersonaModel>(StatusCodes.Status500InternalServerError);
             endpoints.MapGet("/api/persona", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
-
+                int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
+                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
                 PersonaController controller = new PersonaController(httpContext, context);
 
-                return await controller.Get();
+                return await controller.Get(page,perPage);
 
             }).Produces<PersonaModel>(StatusCodes.Status200OK)
               .Produces<PersonaModel>(StatusCodes.Status400BadRequest)

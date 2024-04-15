@@ -22,7 +22,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> Get()
+        public async Task<IResult> Get(int page, int perPage)
         {
             PersonaModel Model = new PersonaModel();
 
@@ -31,10 +31,11 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
             try
             {
 
-                List<Netcore.ActivoFijo.Business.Persona> business = await Netcore.ActivoFijo.Business.Persona.GetAllAsync(this._context);
-
+                List<Netcore.ActivoFijo.Business.Persona> business = await Netcore.ActivoFijo.Business.Persona.GetAllAsyncPaginated(this._context,page,perPage);
+                int count = Netcore.ActivoFijo.Business.Persona.GetCount(this._context);                
                 List<PersonaDTO> listDTO = business.Select(t => t.Adapt<PersonaDTO>()).ToList();
-
+                Model.Pages = (int)Math.Ceiling((double)count / perPage);
+                Model.Total = count;
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
 

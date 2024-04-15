@@ -39,5 +39,7 @@ namespace Netcore.Web.Api.Model.Abstract
             get;
             set;
         } = string.Empty;
+        public int? Total { get; set; }
+        public int? Pages { get; set; }
     }
 }

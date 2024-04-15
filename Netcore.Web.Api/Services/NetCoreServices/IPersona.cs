@@ -4,7 +4,7 @@ namespace Netcore.Web.Api.Services.NetCoreServices
 {
     public interface IPersona
     {
-        Task<IResult> Get();
+        Task<IResult> Get(int page,int perPage);
 
         Task<IResult> Post(PersonaDTO input);
 
