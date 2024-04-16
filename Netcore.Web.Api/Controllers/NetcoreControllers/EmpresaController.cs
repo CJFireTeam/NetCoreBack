@@ -78,7 +78,26 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     EmpresaDTO.RutDigito.ToString(),
                     EmpresaDTO.RazonSocial,
                     EmpresaDTO.TipoAdministracionCodigo,
-                    EmpresaDTO.Bloqueada
+                    EmpresaDTO.Bloqueada,
+                    EmpresaDTO.RegionCodigo,
+                    EmpresaDTO.CiudadCodigo,
+                    EmpresaDTO.ComunaCodigo,
+                    EmpresaDTO.ActividadEconomicaPrincipalCodigo,
+                    EmpresaDTO.SectorActividadEconomicaCodigo,
+                    EmpresaDTO.ActividadEconomicaCodigo,
+                    EmpresaDTO.Giro,
+                    EmpresaDTO.Direccion,
+                    EmpresaDTO.Email,
+                    EmpresaDTO.PaginaWeb,
+                    EmpresaDTO.Telefono1,
+                    EmpresaDTO.Telefono2,
+                    EmpresaDTO.Fax,
+                    EmpresaDTO.Celular,
+                    EmpresaDTO.AdministradorId,
+                    EmpresaDTO.GerenteRRHHId,
+                    EmpresaDTO.RutaReporte,
+                    EmpresaDTO.PieFirmaLiquidacion,
+                    EmpresaDTO.URL
                 );
 
                 EmpresaDTO dto = business.Adapt<EmpresaDTO>();
