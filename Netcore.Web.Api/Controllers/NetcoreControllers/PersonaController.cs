@@ -103,7 +103,8 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     PersonaDTO.TelefonoLaboral,
                     PersonaDTO.DireccionLaboral,
                     PersonaDTO.AreaGeograficaCodigo,
-                    PersonaDTO.NroDepartamento
+                    PersonaDTO.NroDepartamento,
+                    PersonaDTO.FechaNacimiento
                     );
 
                 PersonaDTO dto = business.Adapt<PersonaDTO>();
