@@ -1,5 +1,4 @@
-﻿namespace Netcore.Web.Api;
-
+﻿namespace Netcore.Web.Api.DTO.NetcoreDTO;
 public class NacionalidadDTO
 {
     public int Codigo { get; set; }
