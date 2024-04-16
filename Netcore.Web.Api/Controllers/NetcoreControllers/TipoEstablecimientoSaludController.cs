@@ -8,7 +8,7 @@ using Netcore.Web.Api.Services.NetCoreServices;
 
 namespace Netcore.Web.Api.Controllers.NetcoreControllers
 {
-    public class TipoEstablecimientoSaludController : BaseController, IEstadoCivil
+    public class TipoEstablecimientoSaludController : BaseController, ITipoEstablecimientoSalud
     {
         private Context _context;
 
@@ -23,15 +23,15 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
         public async Task<IResult> Get()
         {
-            EstadoCivilModel Model = new EstadoCivilModel();
+            TipoEstablecimientoSaludModel Model = new TipoEstablecimientoSaludModel();
 
             Model.Success = true;
 
             try
             {
-                List<Netcore.ActivoFijo.Business.EstadoCivil> EstadoCivil = await Netcore.ActivoFijo.Business.EstadoCivil.GetAllAsync(this._context);
+                List<Netcore.ActivoFijo.Business.TipoEstablecimientoSalud> TipoEstablecimientoSalud = await Netcore.ActivoFijo.Business.TipoEstablecimientoSalud.GetAllAsync(this._context);
 
-                List<EstadoCivilDTO> listDTO = EstadoCivil.Select(t => t.Adapt<EstadoCivilDTO>()).ToList();
+                List<TipoEstablecimientoSaludDTO> listDTO = TipoEstablecimientoSalud.Select(t => t.Adapt<TipoEstablecimientoSaludDTO>()).ToList();
 
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
