@@ -10,18 +10,18 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/estadocivil", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/tipoestablecimientosalud", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
 
-                EstadoCivilController controller = new EstadoCivilController(httpContext, context);
+                TipoEstablecimientoSaludController controller = new TipoEstablecimientoSaludController(httpContext, context);
 
                 return await controller.Get();
 
-            }).Produces<EstadoCivilModel>(StatusCodes.Status200OK)
-              .Produces<EstadoCivilModel>(StatusCodes.Status400BadRequest)
-              .Produces<EstadoCivilModel>(StatusCodes.Status401Unauthorized)
-              .Produces<EstadoCivilModel>(StatusCodes.Status403Forbidden)
-              .Produces<EstadoCivilModel>(StatusCodes.Status500InternalServerError);
+            }).Produces<TipoEstablecimientoSaludModel>(StatusCodes.Status200OK)
+              .Produces<TipoEstablecimientoSaludModel>(StatusCodes.Status400BadRequest)
+              .Produces<TipoEstablecimientoSaludModel>(StatusCodes.Status401Unauthorized)
+              .Produces<TipoEstablecimientoSaludModel>(StatusCodes.Status403Forbidden)
+              .Produces<TipoEstablecimientoSaludModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }

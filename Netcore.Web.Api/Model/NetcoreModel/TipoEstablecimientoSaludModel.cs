@@ -3,7 +3,7 @@ using Netcore.Web.Api.Model.Abstract;
 
 namespace Netcore.Web.Api.Model.NetcoreModel
 {
-    public class TipoEstablecimientoSaludModel : GenericBaseModel<EstadoCivilDTO>
+    public class TipoEstablecimientoSaludModel : GenericBaseModel<TipoEstablecimientoSaludDTO>
     {
     }
 }
