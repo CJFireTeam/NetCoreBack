@@ -44,20 +44,20 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
               .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
               .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
-              
-            // endpoints.MapGet("/api/Empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            // {
-            //     int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
-            //     int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
-            //     EmpresaController controller = new EmpresaController(httpContext, context);
 
-            //     return await controller.Get(page,perPage);
+            endpoints.MapGet("/api/Empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
+                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
+                EmpresaController controller = new EmpresaController(httpContext, context);
 
-            // }).Produces<EmpresaModel>(StatusCodes.Status200OK)
-            //   .Produces<EmpresaModel>(StatusCodes.Status400BadRequest)
-            //   .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
-            //   .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
-            //   .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
+                return await controller.Get(page, perPage);
+
+            }).Produces<EmpresaModel>(StatusCodes.Status200OK)
+              .Produces<EmpresaModel>(StatusCodes.Status400BadRequest)
+              .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
+              .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
+              .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }

@@ -286,6 +286,12 @@ namespace Netcore.ActivoFijo
                 from empresa in context.Empresas
                 select empresa;
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.Empresa> GetEmpresasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.Empresas
+            .Skip((page - 1) * elementsPerPage)
+            .Take(elementsPerPage);
+        }
 
         #endregion
 
@@ -539,11 +545,11 @@ namespace Netcore.ActivoFijo
                 from persona in context.Personas
                 select persona;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Persona> GetPersonasPaginated(Netcore.ActivoFijo.Model.Context context,int page,int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Persona> GetPersonasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
         {
-    return context.Personas
-        .Skip((page - 1) * elementsPerPage)
-        .Take(elementsPerPage);
+            return context.Personas
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
         }
         #endregion
 
@@ -714,7 +720,7 @@ namespace Netcore.ActivoFijo
         internal static IQueryable<Netcore.ActivoFijo.Model.TipoAlmacen> GetOneTipoAlmacenes(Netcore.ActivoFijo.Model.Context context, string uuid)
         {
             Guid guidUuid = Guid.Parse(uuid);
-            return  context.TipoAlmacens.Where(tipoAlmacen => tipoAlmacen.Id == guidUuid);
+            return context.TipoAlmacens.Where(tipoAlmacen => tipoAlmacen.Id == guidUuid);
 
         }
         #endregion
