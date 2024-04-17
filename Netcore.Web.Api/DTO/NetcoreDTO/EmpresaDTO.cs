@@ -2,6 +2,7 @@
 {
     public class EmpresaDTO
     {
+        public Guid Id { get; set; }
         public string Rut { get; set; }
         public int RutCuerpo { get; set; }
         public char RutDigito { get; set; }
