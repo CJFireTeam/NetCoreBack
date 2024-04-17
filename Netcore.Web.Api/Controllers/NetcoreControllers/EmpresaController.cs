@@ -21,36 +21,36 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        // public async Task<IResult> Get(int page, int perPage)
-        // {
-        //     EmpresaModel Model = new EmpresaModel();
+        public async Task<IResult> Get(int page, int perPage)
+        {
+            EmpresaModel Model = new EmpresaModel();
 
-        //     Model.Success = true;
+            Model.Success = true;
 
-        //     try
-        //     {
+            try
+            {
 
-        //         List<Netcore.ActivoFijo.Business.Empresa> business = await Netcore.ActivoFijo.Business.Empresa.GetAllAsyncPaginated(this._context,page,perPage);
-        //         int count = Netcore.ActivoFijo.Business.Empresa.GetCount(this._context);                
-        //         List<EmpresaDTO> listDTO = business.Select(t => t.Adapt<EmpresaDTO>()).ToList();
-        //         Model.Pages = (int)Math.Ceiling((double)count / perPage);
-        //         Model.Total = count;
-        //         Model.Code = (int)StatusCodes.Status200OK;
-        //         Model.DataList = listDTO;
+                List<Netcore.ActivoFijo.Business.Empresa> business = await Netcore.ActivoFijo.Business.Empresa.GetAllAsyncPaginated(this._context, page, perPage);
+                int count = Netcore.ActivoFijo.Business.Empresa.GetCount(this._context);
+                List<EmpresaDTO> listDTO = business.Select(t => t.Adapt<EmpresaDTO>()).ToList();
+                Model.Pages = (int)Math.Ceiling((double)count / perPage);
+                Model.Total = count;
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.DataList = listDTO;
 
-        //         return Results.Ok(Model);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Model.Success = false;
-        //         Model.Status = "ERROR";
-        //         Model.SubStatus = "ERROR";
-        //         Model.Message = ex.Message;
-        //         Model.Code = (int)StatusCodes.Status500InternalServerError;
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
 
-        //         return Results.BadRequest(Model);
-        //     }
-        // }
+                return Results.BadRequest(Model);
+            }
+        }
 
         public async Task<IResult> Post(EmpresaDTO EmpresaDTO)
         {
