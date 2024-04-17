@@ -551,6 +551,12 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.CentroCosto> GetCentroCostosPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.CentroCostos
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
+        }
         #endregion
 
         #region PostTitulo
