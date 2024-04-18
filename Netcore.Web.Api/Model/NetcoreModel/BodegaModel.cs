@@ -3,7 +3,5 @@ using Netcore.Web.Api.Model.Abstract;
 
 namespace Netcore.Web.Api.Model.NetcoreModel
 {
-    public class BodegaModel : GenericBaseModel<BodegaDTO>
-    {
-    }
+    public class BodegaModel : GenericBaseModel<BodegaDTO> { }
 }
