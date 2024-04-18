@@ -4,6 +4,10 @@ namespace Netcore.Web.Api.Services.NetCoreServices
 {
     public interface IBodega
     {
-        Task<IResult> GetBodegas();
+        Task<IResult> Get(int page, int perPage);
+
+        Task<IResult> Post(BodegaDTO input);
+
+        // Task<IResult> Put(PersonaDTO input);
     }
 }

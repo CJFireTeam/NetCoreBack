@@ -559,6 +559,13 @@ namespace Netcore.ActivoFijo
         }
         #endregion
 
+        internal static IQueryable<Netcore.ActivoFijo.Model.Bodega> GetBodegasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.Bodegas
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
+        }
+
         #region PostTitulo
 
         internal static IQueryable<Netcore.ActivoFijo.Model.PostTitulo> GetPostTitulos(Netcore.ActivoFijo.Model.Context context)
@@ -894,6 +901,6 @@ namespace Netcore.ActivoFijo
                 select unidadFuncional;
         }
 
-        #endregion       
+        #endregion
     }
 }
