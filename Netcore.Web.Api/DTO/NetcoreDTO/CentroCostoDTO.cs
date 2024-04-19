@@ -27,7 +27,7 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public string CodigoPrevired { get; set; } = null!;
         public int? CodigoGesparvu { get; set; }
         public bool AdministracionCentral { get; set; }
-        public string CodigoDipres { get; set; } = null!;
+        public string CodigoDIPRES { get; set; } = null!;
         public bool Contabilizacion { get; set; }
     }
 }
