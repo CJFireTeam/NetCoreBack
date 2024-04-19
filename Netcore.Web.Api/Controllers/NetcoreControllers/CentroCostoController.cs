@@ -99,7 +99,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     CentroCostoDTO.CodigoPrevired,
                     CentroCostoDTO.CodigoGesparvu,
                     CentroCostoDTO.AdministracionCentral,
-                    CentroCostoDTO.CodigoDIPRES,
+                    CentroCostoDTO.CodigoDipres,
                     CentroCostoDTO.Contabilizacion
                     );
 
