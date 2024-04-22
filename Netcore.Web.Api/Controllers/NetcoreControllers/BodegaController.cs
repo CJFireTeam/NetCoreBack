@@ -77,10 +77,10 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     this._context,
                     BodegaDTO.EmpresaId,
                     BodegaDTO.CentroCostoId,
-                    BodegaDTO.Id,
                     BodegaDTO.Nombre,
                     BodegaDTO.Sigla,
-                    BodegaDTO.Descripcion
+                    BodegaDTO.Descripcion,
+                    BodegaDTO.Id
                     );
 
                 BodegaDTO dto = business.Adapt<BodegaDTO>();
