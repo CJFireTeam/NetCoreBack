@@ -31,7 +31,7 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public bool Contabilizacion { get; set; }
         public CentroCostoDTO_EMPRESA? Empresa { get; set; }
         public PersonaDTO? Administrador { get; set; }
-        public BodegaDTO[]? Bodegas { get; set; }
+        public CentroCostoDTO_BODEGAS[]? Bodegas { get; set; }
 
 
     }
@@ -63,5 +63,14 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public string? RutaReporte { get; set; }
         public string? PieFirmaLiquidacion { get; set; }
         public string? URL { get; set; }
+    }
+        public class CentroCostoDTO_BODEGAS
+    {
+        public Guid EmpresaId { get; set; }
+        public Guid CentroCostoId { get; set; }
+        public Guid Id { get; set; }
+        public string Nombre { get; set; } = null!;
+        public string? Sigla { get; set; }
+        public string? Descripcion { get; set; }
     }
 }
