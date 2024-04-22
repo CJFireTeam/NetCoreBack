@@ -70,7 +70,6 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 List<CentroCostoDTO> listDTO = business.Select(t => t.Adapt<CentroCostoDTO>()).ToList();
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
-
                 return Results.Ok(Model);
             }
             catch (Exception ex)
