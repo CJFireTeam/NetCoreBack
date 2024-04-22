@@ -131,7 +131,8 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     CentroCostoDTO.CodigoGesparvu,
                     CentroCostoDTO.AdministracionCentral,
                     CentroCostoDTO.CodigoDipres,
-                    CentroCostoDTO.Contabilizacion
+                    CentroCostoDTO.Contabilizacion,
+                    CentroCostoDTO.Id
                     );
 
                 CentroCostoDTO dto = business.Adapt<CentroCostoDTO>();
