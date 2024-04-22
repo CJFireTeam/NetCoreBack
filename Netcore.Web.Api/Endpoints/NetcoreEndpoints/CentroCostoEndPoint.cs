@@ -57,6 +57,19 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<CentroCostoModel>(StatusCodes.Status401Unauthorized)
               .Produces<CentroCostoModel>(StatusCodes.Status403Forbidden)
               .Produces<CentroCostoModel>(StatusCodes.Status500InternalServerError);
+            endpoints.MapGet("/api/CentroCosto/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                  string id = (httpContext.Request.RouteValues["id"].ToString());
+
+                CentroCostoController controller = new CentroCostoController(httpContext, context);
+
+                return await controller.GetOne(id);
+
+            }).Produces<CentroCostoModel>(StatusCodes.Status200OK)
+              .Produces<CentroCostoModel>(StatusCodes.Status400BadRequest)
+              .Produces<CentroCostoModel>(StatusCodes.Status401Unauthorized)
+              .Produces<CentroCostoModel>(StatusCodes.Status403Forbidden)
+              .Produces<CentroCostoModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }

@@ -7,7 +7,7 @@ namespace Netcore.Web.Api.Services.NetCoreServices
         Task<IResult> Get(int page, int perPage);
 
         Task<IResult> Post(CentroCostoDTO input);
-
+        Task<IResult> GetOne(string id);
         // Task<IResult> Put(PersonaDTO input);
     }
 }

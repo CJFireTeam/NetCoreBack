@@ -557,6 +557,13 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.CentroCosto> GetCentroCostosOne(Netcore.ActivoFijo.Model.Context context, Guid id)
+        {
+            return
+                from centroCosto in context.CentroCostos
+                where centroCosto.Id == id
+                select centroCosto;
+        }
         #endregion
 
         internal static IQueryable<Netcore.ActivoFijo.Model.Bodega> GetBodegasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
