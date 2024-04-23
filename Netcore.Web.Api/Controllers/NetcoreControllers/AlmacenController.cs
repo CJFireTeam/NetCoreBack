@@ -27,15 +27,63 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
             Model.Success = true;
             try
             {
-                if (string.IsNullOrEmpty(Id)) throw new Exception("El valor proporcionado no es un guid válido." + Id); 
-                if (!Guid.TryParse(Id, out Guid guID)) throw new Exception("El valor proporcionado no es un GUID válido.");    
-                List<Netcore.ActivoFijo.Business.Almacen> business = await Netcore.ActivoFijo.Business.Almacen.GetAllAsyncPaginated(this._context, page, perPage,guID);
+                if (string.IsNullOrEmpty(Id)) throw new Exception("El valor proporcionado no es un guid válido." + Id);
+                if (!Guid.TryParse(Id, out Guid guID)) throw new Exception("El valor proporcionado no es un GUID válido.");
+                List<Netcore.ActivoFijo.Business.Almacen> business = await Netcore.ActivoFijo.Business.Almacen.GetAllAsyncPaginated(this._context, page, perPage, guID);
                 int count = Netcore.ActivoFijo.Business.Almacen.GetCount(this._context);
                 List<AlmacenDTO> listDTO = business.Select(t => t.Adapt<AlmacenDTO>()).ToList();
                 Model.Pages = (int)Math.Ceiling((double)count / perPage);
                 Model.Total = count;
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
+        public async Task<IResult> Post(AlmacenDTO AlmacenDTO)
+        {
+            AlmacenModel Model = new AlmacenModel();
+
+            Model.Success = true;
+
+            try
+            {
+                if
+                (
+                    string.IsNullOrWhiteSpace(AlmacenDTO.Codigo) || string.IsNullOrWhiteSpace(AlmacenDTO.Nombre)
+
+                )
+
+                {
+                    throw new Exception("Campos requeridos");
+                }
+
+
+                Netcore.ActivoFijo.Business.Almacen business = await Netcore.ActivoFijo.Business.Almacen.Insert(
+                    this._context,
+                    AlmacenDTO.EmpresaId,
+                    AlmacenDTO.BodegaId,
+                    AlmacenDTO.Id,
+                    AlmacenDTO.CentroCostoId,
+                    AlmacenDTO.TipoAlmacenId,
+                    AlmacenDTO.Codigo,
+                    AlmacenDTO.Nombre
+                    );
+
+                AlmacenDTO dto = business.Adapt<AlmacenDTO>();
+
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.Data = dto;
+                Model.Message = "Agregado correctamente";
                 return Results.Ok(Model);
             }
             catch (Exception ex)
