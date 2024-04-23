@@ -50,9 +50,10 @@ namespace Netcore.ActivoFijo
                 from almacen in context.Almacens
                 select almacen;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetAlmacenesPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetAlmacenesPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage,Guid Id)
         {
             return context.Almacens
+                .Where(almacen => almacen.BodegaId == Id)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }

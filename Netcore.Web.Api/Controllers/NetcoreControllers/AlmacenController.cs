@@ -21,23 +21,21 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> Get(int page, int perPage, string Id)
+        public async Task<IResult> Get(int page, int perPage, string? Id)
         {
             AlmacenModel Model = new AlmacenModel();
-
             Model.Success = true;
-
             try
             {
-
-                List<Netcore.ActivoFijo.Business.Almacen> business = await Netcore.ActivoFijo.Business.Almacen.GetAllAsyncPaginated(this._context, page, perPage);
+                if (string.IsNullOrEmpty(Id)) throw new Exception("El valor proporcionado no es un guid válido." + Id); 
+                if (!Guid.TryParse(Id, out Guid guID)) throw new Exception("El valor proporcionado no es un GUID válido.");    
+                List<Netcore.ActivoFijo.Business.Almacen> business = await Netcore.ActivoFijo.Business.Almacen.GetAllAsyncPaginated(this._context, page, perPage,guID);
                 int count = Netcore.ActivoFijo.Business.Almacen.GetCount(this._context);
                 List<AlmacenDTO> listDTO = business.Select(t => t.Adapt<AlmacenDTO>()).ToList();
                 Model.Pages = (int)Math.Ceiling((double)count / perPage);
                 Model.Total = count;
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
-
                 return Results.Ok(Model);
             }
             catch (Exception ex)
