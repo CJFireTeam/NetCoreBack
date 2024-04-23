@@ -101,7 +101,12 @@ namespace Netcore.ActivoFijo
                 from articulo in context.Articulos
                 select articulo;
         }
-
+        internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.Articulos
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
+        }
         #endregion
 
         #region ArticuloValor
