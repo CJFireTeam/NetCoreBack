@@ -4,11 +4,11 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
     {
         public Guid EmpresaId { get; set; }
         public Guid CentroCostoId { get; set; }
-        public string BodegaId { get; set; } = null!;
-        public string Id { get; set; } = null!;
-        public string? TipoAlmacenId { get; set; }
+        public Guid BodegaId { get; set; }
+        public Guid? Id { get; set; }
+        public Guid TipoAlmacenId { get; set; }
         public string? Codigo { get; set; }
-        public EmpresaDTO? Nombre { get; set; }
+        public string? Nombre { get; set; }
 
     }
 }

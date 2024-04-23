@@ -12,30 +12,30 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            // endpoints.MapPost("/api/Almacen", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            // {
-            //     var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
+            endpoints.MapPost("/api/almacen", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
 
-            //     // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
-            //     var AlmacenDTO = JsonConvert.DeserializeObject<AlmacenDTO>(requestBody);
+                // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
+                var AlmacenDTO = JsonConvert.DeserializeObject<AlmacenDTO>(requestBody);
 
-            //     AlmacenController controller = new AlmacenController(httpContext, context);
+                AlmacenController controller = new AlmacenController(httpContext, context);
 
-            //     return await controller.Post(AlmacenDTO);
+                return await controller.Post(AlmacenDTO);
 
-            // }).Produces<AlmacenModel>(StatusCodes.Status200OK)
-            //   .Produces<AlmacenModel>(StatusCodes.Status400BadRequest)
-            //   .Produces<AlmacenModel>(StatusCodes.Status401Unauthorized)
-            //   .Produces<AlmacenModel>(StatusCodes.Status403Forbidden)
-            //   .Produces<AlmacenModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapGet("/api/Almacen", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            }).Produces<AlmacenModel>(StatusCodes.Status200OK)
+              .Produces<AlmacenModel>(StatusCodes.Status400BadRequest)
+              .Produces<AlmacenModel>(StatusCodes.Status401Unauthorized)
+              .Produces<AlmacenModel>(StatusCodes.Status403Forbidden)
+              .Produces<AlmacenModel>(StatusCodes.Status500InternalServerError);
+            endpoints.MapGet("/api/almacen", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 var idString = httpContext.Request.Query["id"].FirstOrDefault();
                 int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
                 int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
                 AlmacenController controller = new AlmacenController(httpContext, context);
 
-                return await controller.Get(page, perPage,idString);
+                return await controller.Get(page, perPage, idString);
 
             }).Produces<AlmacenModel>(StatusCodes.Status200OK)
               .Produces<AlmacenModel>(StatusCodes.Status400BadRequest)

@@ -6,7 +6,7 @@ namespace Netcore.Web.Api.Services.NetCoreServices
     {
         Task<IResult> Get(int page, int perPage, string Id);
 
-        // Task<IResult> Post(AlmacenDTO input);
+        Task<IResult> Post(AlmacenDTO input);
 
 
     }
