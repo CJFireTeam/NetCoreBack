@@ -8,7 +8,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/Ano", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/ano", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 AnoController AnoController = new AnoController(httpContext, context);
 
