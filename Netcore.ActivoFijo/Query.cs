@@ -50,7 +50,7 @@ namespace Netcore.ActivoFijo
                 from almacen in context.Almacens
                 select almacen;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetAlmacenesPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage,Guid Id)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetAlmacenesPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage, Guid Id)
         {
             return context.Almacens
                 .Where(almacen => almacen.BodegaId == Id)
@@ -76,8 +76,11 @@ namespace Netcore.ActivoFijo
         internal static IQueryable<Netcore.ActivoFijo.Model.Ano> GetAnos(Netcore.ActivoFijo.Model.Context context)
         {
             return
+
                 from ano in context.Anos
+                where ano.Activo.Equals(1)
                 select ano;
+
         }
 
         #endregion
