@@ -8,7 +8,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/tipoUnidad", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/tipounidad", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 TipoUnidadController TipoUnidadController = new TipoUnidadController(httpContext, context);
 
