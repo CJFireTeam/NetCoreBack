@@ -870,10 +870,11 @@ namespace Netcore.ActivoFijo
 
         #region TipoLocacion
 
-        internal static IQueryable<Netcore.ActivoFijo.Model.TipoLocacion> GetTipoLocaciones(Netcore.ActivoFijo.Model.Context context)
+        internal static IQueryable<Netcore.ActivoFijo.Model.TipoLocacion> GetTipoLocaciones(Netcore.ActivoFijo.Model.Context context, string id)
         {
             return
                 from tipoLocacion in context.TipoLocacions
+                where tipoLocacion.Id == Guid.Parse(id)
                 select tipoLocacion;
         }
 
