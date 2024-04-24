@@ -11,7 +11,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
             endpoints.MapGet("/api/tipolocacion", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 TipoLocacionController TipoLocacionController = new TipoLocacionController(httpContext, context);
-                string id = httpContext.Request.Query["page"].FirstOrDefault();
+                string id = httpContext.Request.Query["id"].FirstOrDefault();
                 return await TipoLocacionController.GetTipoLocacion(id);
 
             }).Produces<TipoLocacionModel>(StatusCodes.Status200OK)

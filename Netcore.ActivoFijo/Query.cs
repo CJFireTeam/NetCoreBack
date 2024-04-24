@@ -874,7 +874,7 @@ namespace Netcore.ActivoFijo
         {
             return
                 from tipoLocacion in context.TipoLocacions
-                where tipoLocacion.Id == Guid.Parse(id)
+                where tipoLocacion.EmpresaId == Guid.Parse(id)
                 select tipoLocacion;
         }
 
