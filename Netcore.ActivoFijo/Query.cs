@@ -76,11 +76,9 @@ namespace Netcore.ActivoFijo
         internal static IQueryable<Netcore.ActivoFijo.Model.Ano> GetAnos(Netcore.ActivoFijo.Model.Context context)
         {
             return
-
                 from ano in context.Anos
-                where ano.Activo.Equals(1)
+                where ano.Activo == true
                 select ano;
-
         }
 
         #endregion

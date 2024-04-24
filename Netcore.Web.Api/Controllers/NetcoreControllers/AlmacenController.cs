@@ -57,26 +57,21 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-                if
-                (
-                    string.IsNullOrWhiteSpace(AlmacenDTO.Codigo) || string.IsNullOrWhiteSpace(AlmacenDTO.Nombre)
-
-                )
-
+                if ( string.IsNullOrWhiteSpace(AlmacenDTO.Nombre) )
                 {
                     throw new Exception("Campos requeridos");
                 }
 
 
-                Netcore.ActivoFijo.Business.Almacen business = await Netcore.ActivoFijo.Business.Almacen.Insert(
+                Netcore.ActivoFijo.Business.Almacen business = await ActivoFijo.Business.Almacen.Insert(
                     this._context,
                     AlmacenDTO.EmpresaId,
                     AlmacenDTO.BodegaId,
-                    AlmacenDTO.Id,
                     AlmacenDTO.CentroCostoId,
                     AlmacenDTO.TipoAlmacenId,
                     AlmacenDTO.Codigo,
-                    AlmacenDTO.Nombre
+                    AlmacenDTO.Nombre,
+                    AlmacenDTO.Id
                     );
 
                 AlmacenDTO dto = business.Adapt<AlmacenDTO>();
