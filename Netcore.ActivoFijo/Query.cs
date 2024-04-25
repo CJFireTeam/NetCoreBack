@@ -717,6 +717,19 @@ namespace Netcore.ActivoFijo
                 from subFamilia in context.SubFamilia
                 select subFamilia;
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.SubFamilia
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
+        }
+         internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasOne(Netcore.ActivoFijo.Model.Context context, Guid id)
+        {
+            return
+                from subFamilia in context.SubFamilia
+                where subFamilia.Id == id
+                select subFamilia;
+        }
 
         #endregion
 
