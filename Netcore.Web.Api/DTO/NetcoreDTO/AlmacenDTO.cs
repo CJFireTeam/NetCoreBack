@@ -10,5 +10,7 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public string? Codigo { get; set; }
         public string? Nombre { get; set; }
 
+        public LocacionDTO[]? Locacions { get; set; }
+
     }
 }
