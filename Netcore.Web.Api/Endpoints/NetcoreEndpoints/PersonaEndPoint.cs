@@ -12,22 +12,21 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            // endpoints.MapPut("/api/persona", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            // {
-            //     var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
+            endpoints.MapPost("/api/persona/huella", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                string id = httpContext.Request.Query["id"].FirstOrDefault();
 
-            //     // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
-            //     var PersonaDTO = JsonConvert.DeserializeObject<PersonaDTO>(requestBody);
+                var formFile = httpContext.Request.Form.Files.FirstOrDefault(); // Obtener el primer archivo enviado en el formulario
 
-            //     PersonaController controller = new PersonaController(httpContext, context);
+                PersonaController controller = new PersonaController(httpContext, context);
 
-            //     return await controller.Put(PersonaDTO);
+                return await controller.huella(formFile, id);
 
-            // }).Produces<PersonaModel>(StatusCodes.Status200OK)
-            //   .Produces<PersonaModel>(StatusCodes.Status400BadRequest)
-            //   .Produces<PersonaModel>(StatusCodes.Status401Unauthorized)
-            //   .Produces<PersonaModel>(StatusCodes.Status403Forbidden)
-            //   .Produces<PersonaModel>(StatusCodes.Status500InternalServerError);
+            }).Produces<PersonaModel>(StatusCodes.Status200OK)
+              .Produces<PersonaModel>(StatusCodes.Status400BadRequest)
+              .Produces<PersonaModel>(StatusCodes.Status401Unauthorized)
+              .Produces<PersonaModel>(StatusCodes.Status403Forbidden)
+              .Produces<PersonaModel>(StatusCodes.Status500InternalServerError);
             endpoints.MapPost("/api/persona", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();

@@ -28,8 +28,11 @@ public class PersonaDTO
     public string? Ocupacion { get; set; }
     public int? TelefonoLaboral { get; set; }
     public string? DireccionLaboral { get; set; }
-    public byte[]? Huella { get; set; }
-    public byte[]? ImagenHuella { get; set; }
     public int? AreaGeograficaCodigo { get; set; }
     public string? NroDepartamento { get; set; }
+    public byte[]? Huella { get; set; }
 }
+    public class PersonaDTO_Huella
+    {
+        public IFormFile File { get; set; }
+    }

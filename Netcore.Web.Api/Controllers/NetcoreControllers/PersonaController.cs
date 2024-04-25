@@ -53,6 +53,41 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
             }
         }
 
+        public async Task<IResult> huella(IFormFile  input,string id)
+        {
+            PersonaModel Model = new PersonaModel();
+            Model.Success = true;
+
+            try
+            {
+                if (!Guid.TryParse(id, out Guid guid)) throw new Exception("Usuario no valido");
+                byte[] imagenBytes;
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    await input.CopyToAsync(memoryStream);
+                    imagenBytes = memoryStream.ToArray();
+                }
+                Netcore.ActivoFijo.Business.Persona business = await Netcore.ActivoFijo.Business.Persona.setHuella(this._context, imagenBytes,guid);
+
+                PersonaDTO dto = business.Adapt<PersonaDTO>();
+
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.Data = dto;
+                Model.Message = "Agregado correctamente";
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }        
+        }
+
         public async Task<IResult> Post(PersonaDTO PersonaDTO)
         {
             PersonaModel Model = new PersonaModel();
@@ -74,7 +109,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 if (!Helper.ValidateRut(PersonaDTO.RunCuerpo, PersonaDTO.RunDigito.ToString())) throw new Exception("Rut erroneo");
                 Netcore.ActivoFijo.Business.Sexo sexo = await Netcore.ActivoFijo.Business.Sexo.GetAsync(this._context, PersonaDTO.SexoCodigo);
                 if (sexo == null) throw new Exception("Campo requerido");
-
+                if (Netcore.ActivoFijo.Business.Persona.Exist(this._context,PersonaDTO.RunCuerpo,PersonaDTO.RunDigito.ToString())) throw new Exception("El usuario ya se encuentra registrado");
 
                 Netcore.ActivoFijo.Business.Persona business = await Netcore.ActivoFijo.Business.Persona.Insert(
                     this._context, 
@@ -125,34 +160,6 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 return Results.BadRequest(Model);
             }
         }
-        // public async Task<IResult> Put(PersonaDTO PersonaDTO)
-        // {
-        //     PersonaModel Model = new PersonaModel();
-
-        //     Model.Success = true;
-
-        //     try
-        //     {
-        //         if (PersonaDTO.Id == null) throw new("Id no encontrado");
-        //         Netcore.ActivoFijo.Business.Persona find = await Netcore.ActivoFijo.Business.Persona.FindOne(this._context, PersonaDTO.Id);                
-        //         Netcore.ActivoFijo.Business.Persona business = await Netcore.ActivoFijo.Business.Persona.Update(this._context,PersonaDTO.Id, PersonaDTO.Codigo, PersonaDTO.Nombre);
-        //         PersonaDTO dto = business.Adapt<PersonaDTO>();
-
-        //         Model.Code = (int)StatusCodes.Status200OK;
-        //         Model.Data = dto;
-        //         Model.Message = "Modificado correctamente";
-        //         return Results.Ok(Model);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Model.Success = false;
-        //         Model.Status = "ERROR";
-        //         Model.SubStatus = "ERROR";
-        //         Model.Message = ex.Message;
-        //         Model.Code = (int)StatusCodes.Status500InternalServerError;
-
-        //         return Results.BadRequest(Model);
-        //     }
-        // }
+       
     }
 }
