@@ -17,7 +17,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
                 string id = httpContext.Request.Query["id"].FirstOrDefault();
 
                 // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
-                
+
                 EmpresaController controller = new EmpresaController(httpContext, context);
 
                 return await controller.Bloqueo(id);
@@ -57,6 +57,19 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
               .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
               .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
+            endpoints.MapGet("/api/empresa/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+    {
+        string id = (httpContext.Request.RouteValues["id"].ToString());
+
+        EmpresaController controller = new EmpresaController(httpContext, context);
+
+        return await controller.GetOne(id);
+
+    }).Produces<CentroCostoModel>(StatusCodes.Status200OK)
+      .Produces<CentroCostoModel>(StatusCodes.Status400BadRequest)
+      .Produces<CentroCostoModel>(StatusCodes.Status401Unauthorized)
+      .Produces<CentroCostoModel>(StatusCodes.Status403Forbidden)
+      .Produces<CentroCostoModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }
