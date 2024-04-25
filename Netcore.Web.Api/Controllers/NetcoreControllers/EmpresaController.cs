@@ -81,6 +81,36 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 return Results.BadRequest(Model);
             }
         }
+        public async Task<IResult> GetOne(string id)
+        {
+            EmpresaModel Model = new EmpresaModel();
+
+            Model.Success = true;
+
+            try
+            {
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.Empresa> business = await Netcore.ActivoFijo.Business.Empresa.GetOne(this._context,guID);
+                List<EmpresaDTO> listDTO = business.Select(t => t.Adapt<EmpresaDTO>()).ToList();
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.DataList = listDTO;
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
 
         public async Task<IResult> Post(EmpresaDTO EmpresaDTO)
         {

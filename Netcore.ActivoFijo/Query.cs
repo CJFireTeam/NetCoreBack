@@ -305,6 +305,13 @@ namespace Netcore.ActivoFijo
             .Skip((page - 1) * elementsPerPage)
             .Take(elementsPerPage);
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.Empresa> GetEmpresasOne(Netcore.ActivoFijo.Model.Context context, Guid id)
+        {
+            return
+                from empresa in context.Empresas
+                where empresa.Id == id
+                select empresa;
+        }
 
         #endregion
 
