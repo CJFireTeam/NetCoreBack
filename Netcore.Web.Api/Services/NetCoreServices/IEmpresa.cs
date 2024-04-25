@@ -4,8 +4,10 @@ namespace Netcore.Web.Api;
 
 public interface IEmpresa
 {
-    // Task<IResult> Get(int page,int perPage);
+    Task<IResult> Get(int page,int perPage);
 
     Task<IResult> Post(EmpresaDTO input);
+
+    Task<IResult> Bloqueo(string id);
 
 }

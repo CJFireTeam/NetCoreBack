@@ -12,22 +12,21 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            // endpoints.MapPut("/api/Empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            // {
-            //     var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
+            endpoints.MapDelete("/api/empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                string id = httpContext.Request.Query["id"].FirstOrDefault();
 
-            //     // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
-            //     var EmpresaDTO = JsonConvert.DeserializeObject<EmpresaDTO>(requestBody);
+                // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
+                
+                EmpresaController controller = new EmpresaController(httpContext, context);
 
-            //     EmpresaController controller = new EmpresaController(httpContext, context);
+                return await controller.Bloqueo(id);
 
-            //     return await controller.Put(EmpresaDTO);
-
-            // }).Produces<EmpresaModel>(StatusCodes.Status200OK)
-            //   .Produces<EmpresaModel>(StatusCodes.Status400BadRequest)
-            //   .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
-            //   .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
-            //   .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
+            }).Produces<EmpresaModel>(StatusCodes.Status200OK)
+              .Produces<EmpresaModel>(StatusCodes.Status400BadRequest)
+              .Produces<EmpresaModel>(StatusCodes.Status401Unauthorized)
+              .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
+              .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
             endpoints.MapPost("/api/empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
@@ -45,7 +44,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<EmpresaModel>(StatusCodes.Status403Forbidden)
               .Produces<EmpresaModel>(StatusCodes.Status500InternalServerError);
 
-            endpoints.MapGet("/api/Empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/empresa", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
                 int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");

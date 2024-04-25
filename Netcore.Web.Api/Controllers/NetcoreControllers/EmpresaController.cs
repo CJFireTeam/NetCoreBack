@@ -19,7 +19,37 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
         }
 
+        public async Task<IResult> Bloqueo(string id)
+        {
+            EmpresaModel Model = new EmpresaModel();
 
+            Model.Success = true;
+
+            try
+            {
+                if (!Guid.TryParse(id, out Guid guid)) throw new Exception("Empresa no valida");
+
+                if (!Netcore.ActivoFijo.Business.Empresa.ExistById(this._context,guid)) throw new Exception("Empresa no existente");
+
+                Netcore.ActivoFijo.Business.Empresa business = await Netcore.ActivoFijo.Business.Empresa.Estado(this._context,guid);
+
+                EmpresaDTO dto = business.Adapt<EmpresaDTO>();
+
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.Data = dto;
+                Model.Message = "Cambio de estado correctamente";
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }        }
 
         public async Task<IResult> Get(int page, int perPage)
         {
@@ -71,6 +101,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 if (!Helper.ValidateRut(EmpresaDTO.RutCuerpo, EmpresaDTO.RutDigito.ToString())) throw new Exception("Rut erroneo");
                 Netcore.ActivoFijo.Business.TipoAdministracion Tipoadm = await Netcore.ActivoFijo.Business.TipoAdministracion.GetAsync(this._context, EmpresaDTO.TipoAdministracionCodigo);
                 if (Tipoadm == null) throw new Exception("Campo requerido");
+                if (Netcore.ActivoFijo.Business.Empresa.ExistByRut(this._context,EmpresaDTO.RutCuerpo,EmpresaDTO.RutDigito.ToString())) throw new Exception("El usuario ya se encuentra registrado");
 
                 Netcore.ActivoFijo.Business.Empresa business = await Netcore.ActivoFijo.Business.Empresa.Insert(
                     this._context,

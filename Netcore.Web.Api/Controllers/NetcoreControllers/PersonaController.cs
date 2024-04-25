@@ -67,6 +67,9 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     await input.CopyToAsync(memoryStream);
                     imagenBytes = memoryStream.ToArray();
                 }
+
+                if (!Netcore.ActivoFijo.Business.Persona.ExistById(this._context,guid)) throw new Exception("El usuario no existe");
+
                 Netcore.ActivoFijo.Business.Persona business = await Netcore.ActivoFijo.Business.Persona.setHuella(this._context, imagenBytes,guid);
 
                 PersonaDTO dto = business.Adapt<PersonaDTO>();
@@ -109,7 +112,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 if (!Helper.ValidateRut(PersonaDTO.RunCuerpo, PersonaDTO.RunDigito.ToString())) throw new Exception("Rut erroneo");
                 Netcore.ActivoFijo.Business.Sexo sexo = await Netcore.ActivoFijo.Business.Sexo.GetAsync(this._context, PersonaDTO.SexoCodigo);
                 if (sexo == null) throw new Exception("Campo requerido");
-                if (Netcore.ActivoFijo.Business.Persona.Exist(this._context,PersonaDTO.RunCuerpo,PersonaDTO.RunDigito.ToString())) throw new Exception("El usuario ya se encuentra registrado");
+                if (Netcore.ActivoFijo.Business.Persona.ExistByRut(this._context,PersonaDTO.RunCuerpo,PersonaDTO.RunDigito.ToString())) throw new Exception("El usuario ya se encuentra registrado");
 
                 Netcore.ActivoFijo.Business.Persona business = await Netcore.ActivoFijo.Business.Persona.Insert(
                     this._context, 
