@@ -28,9 +28,23 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<LocacionModel>(StatusCodes.Status401Unauthorized)
               .Produces<LocacionModel>(StatusCodes.Status403Forbidden)
               .Produces<LocacionModel>(StatusCodes.Status500InternalServerError);
+
+            endpoints.MapGet("/api/locacion", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
+                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
+                LocacionController controller = new LocacionController(httpContext, context);
+
+                return await controller.Get(page, perPage);
+
+            }).Produces<LocacionModel>(StatusCodes.Status200OK)
+              .Produces<LocacionModel>(StatusCodes.Status400BadRequest)
+              .Produces<LocacionModel>(StatusCodes.Status401Unauthorized)
+              .Produces<LocacionModel>(StatusCodes.Status403Forbidden)
+              .Produces<LocacionModel>(StatusCodes.Status500InternalServerError);
+
             return endpoints;
         }
-
         public IServiceCollection RegisterModule(IServiceCollection builder)
         {
             throw new NotImplementedException();
