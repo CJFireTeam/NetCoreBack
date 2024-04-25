@@ -459,7 +459,12 @@ namespace Netcore.ActivoFijo
                 from locacion in context.Locacions
                 select locacion;
         }
-
+        internal static IQueryable<Netcore.ActivoFijo.Model.Locacion> GetLocacionsPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        {
+            return context.Locacions
+                .Skip((page - 1) * elementsPerPage)
+                .Take(elementsPerPage);
+        }
         #endregion
 
         #region Mes
@@ -723,7 +728,7 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
-         internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasOne(Netcore.ActivoFijo.Model.Context context, Guid id)
+        internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasOne(Netcore.ActivoFijo.Model.Context context, Guid id)
         {
             return
                 from subFamilia in context.SubFamilia
