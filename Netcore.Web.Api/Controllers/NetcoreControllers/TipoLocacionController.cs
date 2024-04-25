@@ -21,7 +21,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> GetTipoLocacion(string id)
+        public async Task<IResult> Get(string id)
         {
             TipoLocacionModel Model = new TipoLocacionModel();
 
@@ -50,33 +50,34 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
             }
         }
 
-        // public async Task<IResult> Post(TipoLocacionDTO tipoLocacionDTO)
-        // {
-        //     TipoLocacionModel Model = new TipoLocacionModel();
 
-        //     Model.Success = true;
+        public async Task<IResult> Post(TipoLocacionDTO tipoLocacionDTO)
+        {
+            TipoLocacionModel Model = new TipoLocacionModel();
 
-        //     try
-        //     {
-        //         Netcore.ActivoFijo.Business.TipoLocacion business = await Netcore.ActivoFijo.Business.TipoLocacion.Insert(this._context, tipoLocacionDTO.Codigo, tipoLocacionDTO.Nombre);
-        //         TipoLocacionDTO dto = business.Adapt<TipoLocacionDTO>();
+            Model.Success = true;
 
-        //         Model.Code = (int)StatusCodes.Status200OK;
-        //         Model.Data = dto;
-        //         Model.Message = "Agregado correctamente";
-        //         return Results.Ok(Model);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Model.Success = false;
-        //         Model.Status = "ERROR";
-        //         Model.SubStatus = "ERROR";
-        //         Model.Message = ex.Message;
-        //         Model.Code = (int)StatusCodes.Status500InternalServerError;
+            try
+            {
+                // Netcore.ActivoFijo.Business.TipoLocacion business = await Netcore.ActivoFijo.Business.TipoLocacion.Insert(this._context, tipoLocacionDTO.Codigo, tipoLocacionDTO.Nombre);
+                // TipoLocacionDTO dto = business.Adapt<TipoLocacionDTO>();
 
-        //         return Results.BadRequest(Model);
-        //     }
-        // }
+                Model.Code = (int)StatusCodes.Status200OK;
+                // Model.Data = dto;
+                Model.Message = "Agregado correctamente";
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
 
     }
 }
