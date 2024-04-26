@@ -22,7 +22,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> Get(int page, int perPage)
+        public async Task<IResult> Get(string id, int page, int perPage)
         {
             ArticuloModel Model = new ArticuloModel();
 
@@ -30,8 +30,12 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-
-                List<Netcore.ActivoFijo.Business.Articulo> business = await Netcore.ActivoFijo.Business.Articulo.GetAllAsyncPaginated(this._context,page,perPage);
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.Articulo> business = await Netcore.ActivoFijo.Business.Articulo.GetAllAsyncPaginated(this._context,guID,page,perPage);
                 int count = Netcore.ActivoFijo.Business.Articulo.GetCount(this._context);                
                 List<ArticuloDTO> listDTO = business.Select(t => t.Adapt<ArticuloDTO>()).ToList();
                 Model.Pages = (int)Math.Ceiling((double)count / perPage);

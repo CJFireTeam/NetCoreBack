@@ -102,9 +102,10 @@ namespace Netcore.ActivoFijo
                 from articulo in context.Articulos
                 select articulo;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context,Guid id, int page, int elementsPerPage)
         {
             return context.Articulos
+                .Where(a => a.Id == id)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }

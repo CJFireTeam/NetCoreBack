@@ -16,7 +16,6 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
             {
                 string id = httpContext.Request.Query["id"].FirstOrDefault();
 
-                // Procesar el cuerpo de la solicitud, por ejemplo, deserializar un objeto JSON
 
                 EmpresaController controller = new EmpresaController(httpContext, context);
 

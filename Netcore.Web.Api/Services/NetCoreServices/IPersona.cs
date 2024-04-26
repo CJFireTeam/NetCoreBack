@@ -8,6 +8,8 @@ namespace Netcore.Web.Api.Services.NetCoreServices
 
         Task<IResult> Post(PersonaDTO input);
 
+        Task<IResult> Put(PersonaDTO input);
+
         Task<IResult> huella(IFormFile  input,string id);
     }
 }

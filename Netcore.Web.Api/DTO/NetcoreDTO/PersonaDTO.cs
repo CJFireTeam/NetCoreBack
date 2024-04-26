@@ -1,7 +1,8 @@
 ﻿namespace Netcore.Web.Api;
 
 public class PersonaDTO
-{        public Guid Id { get; set; }
+{        
+    public string? Id { get; set; }
 
     public int RunCuerpo { get; set; }
     public char RunDigito { get; set; }

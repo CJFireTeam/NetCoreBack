@@ -13,7 +13,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
            
-            endpoints.MapPost("/api/Articulo", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapPost("/api/articulo", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
 
@@ -29,13 +29,15 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<ArticuloModel>(StatusCodes.Status401Unauthorized)
               .Produces<ArticuloModel>(StatusCodes.Status403Forbidden)
               .Produces<ArticuloModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapGet("/api/Articulo", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/articulo/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
+                string id = (httpContext.Request.RouteValues["id"].ToString());
+
                 int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
                 int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
                 ArticuloController controller = new ArticuloController(httpContext, context);
 
-                return await controller.Get(page,perPage);
+                return await controller.Get(id,page,perPage);
 
             }).Produces<ArticuloModel>(StatusCodes.Status200OK)
               .Produces<ArticuloModel>(StatusCodes.Status400BadRequest)
