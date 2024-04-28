@@ -38,19 +38,31 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("corsLocalHost", //corsLocalHost
-    builder =>
+    options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins(
-            "http://localhost:3000"
-            )
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-
-        .WithExposedHeaders("content-disposition");
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders("content-disposition");
     });
 });
+
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("corsLocalHost", //corsLocalHost
+//     builder =>
+//     {
+//         builder.WithOrigins(
+//             "http://localhost:3000"
+//             )
+//         .AllowAnyOrigin()
+//         .AllowAnyHeader()
+//         .AllowAnyMethod()
+
+//         .WithExposedHeaders("content-disposition");
+//     });
+// });
 
 builder.Services.AddDbContext<Netcore.ActivoFijo.Model.Context>(x => x.UseSqlServer(connectionStrings, x => x.EnableRetryOnFailure()));
 
@@ -63,6 +75,7 @@ builder.Services.AddAuthorization()
 IHostEnvironment environment = builder.Environment;
 
 Netcore.Abstraction.StaticParams.StaticParams.Environment = environment.EnvironmentName;
+Console.WriteLine($"La aplicación se está ejecutando en el entorno: {environment.EnvironmentName}");
 
 switch (environment.EnvironmentName)
 {
