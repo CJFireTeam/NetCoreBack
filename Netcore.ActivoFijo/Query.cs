@@ -57,7 +57,13 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
-
+        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetOneAlmacenes(Netcore.ActivoFijo.Model.Context context,Guid Id)
+        {
+            return
+                from almacen in context.Almacens
+                where almacen.Id == Id
+                select almacen;
+        }
         #endregion
 
         #region AnoMes

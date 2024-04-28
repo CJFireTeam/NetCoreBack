@@ -8,6 +8,7 @@ namespace Netcore.Web.Api.Services.NetCoreServices
 
         Task<IResult> Post(AlmacenDTO input);
 
+        Task<IResult> GetOne(string Id);
 
     }
 }

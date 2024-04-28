@@ -49,6 +49,34 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                 return Results.BadRequest(Model);
             }
         }
+
+        public async Task<IResult> GetOne(string Id)
+        {
+            AlmacenModel Model = new AlmacenModel();
+            Model.Success = true;
+            try
+            {
+                if (string.IsNullOrEmpty(Id)) throw new Exception("El valor proporcionado no es un guid válido." + Id);
+                if (!Guid.TryParse(Id, out Guid guID)) throw new Exception("El valor proporcionado no es un GUID válido.");
+                List<Netcore.ActivoFijo.Business.Almacen> business = await Netcore.ActivoFijo.Business.Almacen.GetOne(this._context,guID);
+                List<AlmacenDTO> listDTO = business.Select(t => t.Adapt<AlmacenDTO>()).ToList();
+                if (listDTO.Count == 0) throw new Exception("No existe el almacen");
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.DataList = listDTO;
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
+
         public async Task<IResult> Post(AlmacenDTO AlmacenDTO)
         {
             AlmacenModel Model = new AlmacenModel();
@@ -57,7 +85,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-                if ( string.IsNullOrWhiteSpace(AlmacenDTO.Nombre) )
+                if (string.IsNullOrWhiteSpace(AlmacenDTO.Nombre))
                 {
                     throw new Exception("Campos requeridos");
                 }
