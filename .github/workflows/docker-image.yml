@@ -39,3 +39,6 @@ jobs:
             "Secret": "'"$SECRETKEY"'",
           }' > appsettings.temp.json
           mv appsettings.temp.json appsettings.Development.json
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
