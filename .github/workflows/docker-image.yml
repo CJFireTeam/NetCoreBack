@@ -62,4 +62,4 @@ jobs:
               docker stop activofijo || true
               docker rm activofijo || true
               docker run --name activofijo -d -p 80:80 my-image-name:$(date +%s)
-              
+            
