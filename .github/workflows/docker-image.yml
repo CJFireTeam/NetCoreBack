@@ -20,9 +20,6 @@ jobs:
           # Crear appconfig.json
           echo '{
           "env": "Development"
-          //"env": "Local",
-          //"env": "Production",
-          //"env": "Qa"
           }'  > appconfig.json
           echo '{
             "Logging": {
@@ -63,6 +60,6 @@ jobs:
           username: ${{ secrets.DIGITALOCEANUSERNAME }}
           password: ${{ secrets.DIGITALOCEANPASSWORD }}
           script: |
-            docker stop activofijo || true
-            docker rm activofijo || true
+            # docker stop activofijo || true
+            # docker rm activofijo || true
             docker run --name activofijo -d -p 80:80 my-image-name:${{ steps.build-image.outputs.image-tag }}
