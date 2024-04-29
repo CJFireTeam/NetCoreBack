@@ -43,23 +43,20 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
 
-
-
   deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-  
-        - name: Deploy to DigitalOcean
-          uses: appleboy/ssh-action@master
-          with:
-            host: $DIGITALOCEANHOST
-            username: $DIGITALOCEANUSERNAME
-            password: $DIGITALOCEANPASSWORD
-            script: |
-              docker stop activofijo || true
-              docker rm activofijo || true
-              docker run --name activofijo -d -p 80:80 my-image-name:$(date +%s)
-            
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to DigitalOcean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITALOCEANHOST }}
+          username: ${{ secrets.DIGITALOCEANUSERNAME }}
+          password: ${{ secrets.DIGITALOCEANPASSWORD }}
+          script: |
+            docker stop activofijo || true
+            docker rm activofijo || true
+            docker run --name activofijo -d -p 80:80 my-image-name:$(date +%s)
