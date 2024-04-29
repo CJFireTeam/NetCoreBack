@@ -13,13 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      # Crea el archivo appsettings.json
-    - name: Set up appconfig.development.json
-      run: |
-          # Crear appconfig.json
+      - uses: actions/checkout@v4
+
+      - name: Set up appconfig.development.json
+        run: |
           echo '{
-          "env": "Development"
+            "env": "Development"
           }'  > appconfig.json
           echo '{
             "Logging": {
@@ -33,25 +32,39 @@ jobs:
             "ConnectionStrings": {
               "Netcore": "'"$NETCORE"'"
             },
-            "Secret": "'"$SECRETKEY"'",
+            "Secret": "'"$SECRETKEY"'"
           }' > appsettings.temp.json
           mv appsettings.temp.json appsettings.Development.json
-    - name: Build the Docker image
-      id: build-image
-      run: |
-         docker build . --file Dockerfile --tag my-image-name:latest
-         echo "::set-output name=image-tag::latest"
 
-    - name: Export image tag
-      run: echo "The image tag is ${{ steps.build-image.outputs.image-tag }}"
+      - name: Build the Docker image
+        id: build-image
+        run: |
+          docker build . --file Dockerfile --tag my-image-name:latest
+          echo "::set-output name=image-tag::latest"
+          docker save my-image-name:latest > my-image.tar
 
-      
+      - name: Upload image
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-image
+          path: my-image.tar
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download image
+        uses: actions/download-artifact@v2
+        with:
+          name: my-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          docker load < /tmp/my-image.tar
 
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
@@ -60,5 +73,7 @@ jobs:
           username: ${{ secrets.DIGITALOCEANUSERNAME }}
           password: ${{ secrets.DIGITALOCEANPASSWORD }}
           script: |
-           echo "Image tag: ${{ steps.build-image.outputs.image-tag }}"
-           docker run --name activofijo -d -p 80:80 my-image-name:latest
+            docker stop activofijo || true
+            docker rm activofijo || true
+            docker load < /tmp/my-image.tar
+            docker run --name activofijo -d -p 80:80 my-image-name:latest
