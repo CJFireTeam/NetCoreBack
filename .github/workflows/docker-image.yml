@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
       - name: Set up appconfig.development.json
         run: |
           # Crear appconfig.json
@@ -19,6 +20,7 @@ jobs:
           "env": "Development"
           }'  > Netcore.Web.Api/appconfig.json
           
+          # Crear appsettings.Development.json
           echo '{
             "Logging": {
               "LogLevel": {
