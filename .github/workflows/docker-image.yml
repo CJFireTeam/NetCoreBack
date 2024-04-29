@@ -60,4 +60,5 @@ jobs:
           username: ${{ secrets.DIGITALOCEANUSERNAME }}
           password: ${{ secrets.DIGITALOCEANPASSWORD }}
           script: |
-            docker run --name activofijo -d -p 80:80 my-image-name:${{ steps.build-image.outputs.image-tag }}
+           echo "Image tag: ${{ steps.build-image.outputs.image-tag }}"
+           docker run --name activofijo -d -p 80:80 my-image-name:${{ steps.build-image.outputs.image-tag }}
