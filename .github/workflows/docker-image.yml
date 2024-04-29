@@ -29,7 +29,7 @@ jobs:
               "Netcore": "'"$NETCORE"'"
             },
             "Secret": "'"$SECRETKEY"'",
-          }' > Netcore.Web.Api/appconfig.json
+          }' > Netcore.Web.Api/appsettings.json
           
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "${{ secrets.DOCKERUSERNAME }}" --password-stdin
