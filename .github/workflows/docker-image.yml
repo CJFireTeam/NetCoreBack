@@ -39,8 +39,8 @@ jobs:
     - name: Build the Docker image
       id: build-image
       run: |
-        docker build . --file Dockerfile --tag my-image-name:latest
-        echo "::set-output name=image-tag::$(date +%s)"
+         docker build . --file Dockerfile --tag my-image-name:latest
+         echo "::set-output name=image-tag::latest"
 
     - name: Export image tag
       run: echo "The image tag is ${{ steps.build-image.outputs.image-tag }}"
