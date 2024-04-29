@@ -12,7 +12,29 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      - name: Set up appconfig.development.json
+        run: |
+          # Crear appconfig.json
+          echo '{
+          "env": "Development"
+          }'  > appconfig.json
+          
+          echo '{
+            "Logging": {
+              "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetcore": "Warning"
+              }
+            },
+            "env": "Development",
+            "AllowedHosts": "*",
+            "ConnectionStrings": {
+              "Netcore": "'"$NETCORE"'"
+            },
+            "Secret": "'"$SECRETKEY"'",
+          }' > appsettings.temp.json
+          mv appsettings.temp.json appsettings.Development.json
+          
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "${{ secrets.DOCKERUSERNAME }}" --password-stdin
 
