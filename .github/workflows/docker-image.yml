@@ -18,7 +18,7 @@ jobs:
           # Crear appconfig.json
           echo '{
           "env": "Development"
-          }'  > Netcore.Web.Api/appconfig.json
+          }'  > Netcore.Web.Api/appsettings.json
           
           # Crear appsettings.Development.json
           echo '{
