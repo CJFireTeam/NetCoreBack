@@ -19,7 +19,7 @@ jobs:
       - name: Build the Docker image
         id: build-image
         run: |
-          docker build . --file Dockerfile --tag my-image-name:latest
+          docker build . --file Dockerfile --tag netcoreback:latest
 
       - name: Tag the Docker image
         run: |
@@ -39,5 +39,5 @@ jobs:
           script: |
             docker stop activofijo || true
             docker rm activofijo || true
-            docker pull your-dockerhub-username/your-repo-name:latest
+            docker pull r998/netcoreback:latest
             docker run --name activofijo -d -p 80:80 r998/netcoreback:latest
