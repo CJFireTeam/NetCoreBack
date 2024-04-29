@@ -31,9 +31,9 @@ jobs:
             "env": "Development",
             "AllowedHosts": "*",
             "ConnectionStrings": {
-              "Netcore": "'"$NETCORE"'"
+              "Netcore": "${{ secrets.NETCORE }}"
             },
-            "Secret": "'"$SECRETKEY"'",
+            "Secret": "${{ secrets.SECRETKEY }}"
           }' > Netcore.Web.Api/appsettings.Development.json
           
       - name: Login to Docker Hub
