@@ -39,10 +39,16 @@ jobs:
             "Secret": "'"$SECRETKEY"'",
           }' > appsettings.temp.json
           mv appsettings.temp.json appsettings.Development.json
-
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      id: build-image
+      run: |
+        docker build . --file Dockerfile --tag my-image-name:latest
+        echo "::set-output name=image-tag::$(date +%s)"
 
+    - name: Export image tag
+      run: echo "The image tag is ${{ steps.build-image.outputs.image-tag }}"
+
+      
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -59,4 +65,4 @@ jobs:
           script: |
             docker stop activofijo || true
             docker rm activofijo || true
-            docker run --name activofijo -d -p 80:80 my-image-name:$(date +%s)
+            docker run --name activofijo -d -p 80:80 my-image-name:${{ steps.build-image.outputs.image-tag }}
