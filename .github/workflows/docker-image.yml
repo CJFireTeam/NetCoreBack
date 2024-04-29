@@ -14,5 +14,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # Crea el archivo appsettings.json
+    - name: Set up appconfig.development.json
+      run: |
+          # Crear appconfig.json
+          echo '{
+          "env": "Development"
+          //"env": "Local",
+          //"env": "Production",
+          //"env": "Qa"
+          }'  > appconfig.json
+          echo '{
+            "Logging": {
+              "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetcore": "Warning"
+              }
+            },
+            "env": "Development",
+            "AllowedHosts": "*",
+            "ConnectionStrings": {
+              "Netcore": "'"$NETCORE"'"
+            },
+            "Secret": "'"$SECRETKEY"'",
+          }' > appsettings.temp.json
+          mv appsettings.temp.json appsettings.Development.json
