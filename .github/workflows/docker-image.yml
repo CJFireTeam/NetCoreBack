@@ -15,12 +15,7 @@ jobs:
         
       - name: Set up appconfig.development.json
         run: |
-          # Crear appconfig.json
-          echo '{
-          "env": "Development"
-          }'  > Netcore.Web.Api/appsettings.json
-          
-          # Crear appsettings.Development.json
+          # Crear appsettings.json
           echo '{
             "Logging": {
               "LogLevel": {
@@ -34,7 +29,7 @@ jobs:
               "Netcore": "'"$NETCORE"'"
             },
             "Secret": "'"$SECRETKEY"'",
-          }' > appsettings.json
+          }' > Netcore.Web.Api/appconfig.json
           
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "${{ secrets.DOCKERUSERNAME }}" --password-stdin
