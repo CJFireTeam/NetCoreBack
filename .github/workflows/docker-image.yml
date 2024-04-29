@@ -54,15 +54,15 @@ jobs:
         - name: Setup SSH
           uses: webfactory/ssh-agent@v0.5.3
           with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-private-key: ${{ secrets.SSHPRIVATEKEY }}
   
         - name: Deploy to DigitalOcean
           uses: appleboy/ssh-action@master
           with:
-            host: ${{ secrets.DIGITALOCEAN_HOST }}
-            username: ${{ secrets.DIGITALOCEAN_USERNAME }}
-            password: ${{ secrets.DIGITALOCEAN_PASSWORD }}
+            host: ${{ secrets.DIGITALOCEANHOST }}
+            username: ${{ secrets.DIGITALOCEANUSERNAME }}
+            password: ${{ secrets.DIGITALOCEANPASSWORD }}
             script: |
               docker stop activofijo || true
               docker rm activofijo || true
-              docker run --name activofijo -d -p 9000:80 my-image-name:$(date +%s)
+              docker run --name activofijo -d -p 80:80 my-image-name:$(date +%s)
