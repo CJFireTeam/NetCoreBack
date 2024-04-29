@@ -22,7 +22,7 @@ jobs:
         id: build-image
         run: |
           docker build . --file Dockerfile --tag my-image-name:latest
-          docker push my-image-name:latest
+          docker push netcoreback:latest
 
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
@@ -34,4 +34,4 @@ jobs:
             docker stop activofijo || true
             docker rm activofijo || true
             docker pull my-image-name:latest
-            docker run --name activofijo -d -p 80:80 my-image-name:latest
+            docker run --name activofijo -d -p 80:80 netcoreback:latest
