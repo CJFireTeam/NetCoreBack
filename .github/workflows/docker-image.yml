@@ -44,17 +44,13 @@ jobs:
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
 
 
+
   deploy:
       needs: build
       runs-on: ubuntu-latest
       steps:
         - name: Checkout code
           uses: actions/checkout@v4
-  
-        - name: Setup SSH
-          uses: webfactory/ssh-agent@v0.5.3
-          with:
-            ssh-private-key: ${{ secrets.SSHPRIVATEKEY }}
   
         - name: Deploy to DigitalOcean
           uses: appleboy/ssh-action@master
