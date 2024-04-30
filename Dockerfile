@@ -24,10 +24,13 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-COPY ${HOME}/.aspnet/https/aspnetapp.pfx ./
+# Crear certificado autofirmado
+RUN openssl req -x509 -nodes -newkey rsa:4096 -keyout /app/aspnetapp.key -out /app/aspnetapp.crt -days 365 -subj "/C=US/ST=New York/L=New York/O=Example Corp/CN=example.com"
+RUN openssl pkcs12 -export -out /app/aspnetapp.pfx -inkey /app/aspnetapp.key -in /app/aspnetapp.crt -password pass:password
+
 ENV ASPNETCORE_URLS=https://+:443;http://+:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path="./aspnetapp.pfx"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/aspnetapp.pfx"
 
 EXPOSE 443
 
