@@ -30,12 +30,11 @@ COPY ./cert/apache-selfsigned.key /app/apache-selfsigned.key
 
 ENV ASPNETCORE_URLS=https://+:443;http://+:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/aspnetapp.pfx"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/apache-selfsigned.pfx"
 
 
 # Crear archivo PFX a partir del certificado y la clave
 RUN openssl pkcs12 -export -out /app/apache-selfsigned.pfx -inkey /app/apache-selfsigned.key -in /app/apache-selfsigned.crt -password pass:password
-
 
 EXPOSE 443
 
