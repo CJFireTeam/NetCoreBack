@@ -17,13 +17,11 @@ jobs:
         run: |
           # Crear appconfig.json
           echo '{
-          "https_port": 443,
           "env": "Development"
           }'  > Netcore.Web.Api/appsettings.json
           
           # Crear appsettings.json
           echo '{
-            "https_port": 443,
             "Logging": {
               "LogLevel": {
                 "Default": "Information",
