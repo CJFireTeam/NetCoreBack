@@ -28,7 +28,7 @@ COPY --from=publish /app/publish .
 COPY ./cert/apache-selfsigned.crt /app/apache-selfsigned.crt
 COPY ./cert/apache-selfsigned.key /app/apache-selfsigned.key
 
-ENV ASPNETCORE_URLS=https://+:443;http://+:80
+ENV ASPNETCORE_URLS=http://+:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/apache-selfsigned.pfx"
 
