@@ -24,13 +24,18 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Crear certificado autofirmado
-RUN openssl req -x509 -nodes -newkey rsa:4096 -keyout /app/aspnetapp.key -out /app/aspnetapp.crt -days 365 -subj "/C=US/ST=New York/L=New York/O=Example Corp/CN=example.com"
-RUN openssl pkcs12 -export -out /app/aspnetapp.pfx -inkey /app/aspnetapp.key -in /app/aspnetapp.crt -password pass:password
+# Copiar certificado SSL generado en Digital Ocean
+COPY /etc/ssl/certs/apache-selfsigned.crt /app/apache-selfsigned.crt
+COPY /etc/ssl/private/apache-selfsigned.key /app/apache-selfsigned.key
 
 ENV ASPNETCORE_URLS=https://+:443;http://+:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/aspnetapp.pfx"
+
+
+# Crear archivo PFX a partir del certificado y la clave
+RUN openssl pkcs12 -export -out /app/apache-selfsigned.pfx -inkey /app/apache-selfsigned.key -in /app/apache-selfsigned.crt -password pass:password
+
 
 EXPOSE 443
 
