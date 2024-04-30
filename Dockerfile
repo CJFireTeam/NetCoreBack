@@ -25,8 +25,8 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Copiar certificado SSL generado en Digital Ocean
-COPY /etc/ssl/certs/apache-selfsigned.crt /app/apache-selfsigned.crt
-COPY /etc/ssl/private/apache-selfsigned.key /app/apache-selfsigned.key
+COPY ./cert/apache-selfsigned.crt /app/apache-selfsigned.crt
+COPY ./cert/apache-selfsigned.key /app/apache-selfsigned.key
 
 ENV ASPNETCORE_URLS=https://+:443;http://+:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
