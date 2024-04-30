@@ -1,9 +1,8 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Development
 WORKDIR /src
@@ -24,5 +23,13 @@ RUN dotnet publish "./Netcore.Web.Api.csproj" -c $BUILD_CONFIGURATION -o /app/pu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+COPY ${HOME}/.aspnet/https/aspnetapp.pfx ./
+ENV ASPNETCORE_URLS=https://+:443;http://+:80
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="./aspnetapp.pfx"
+
+EXPOSE 443
+
 ENTRYPOINT ["dotnet", "Netcore.Web.Api.dll"]
 ENV ASPNETCORE_ENVIRONMENT=Development
