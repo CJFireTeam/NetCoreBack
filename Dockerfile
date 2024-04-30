@@ -29,8 +29,8 @@ COPY --from=publish /app/publish .
 # COPY ./cert/apache-selfsigned.key /app/apache-selfsigned.key
 
 ENV ASPNETCORE_URLS=http://+:80
-ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/apache-selfsigned.pfx"
+# ENV ASPNETCORE_Kestrel__Certificates__Default__Password="password"
+# ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/apache-selfsigned.pfx"
 
 
 # Crear archivo PFX a partir del certificado y la clave
