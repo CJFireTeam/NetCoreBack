@@ -115,7 +115,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();  comentado para dev
 
 app.MapEndpoints();
 
