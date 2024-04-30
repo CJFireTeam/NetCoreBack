@@ -107,7 +107,8 @@ switch (environment.EnvironmentName)
 
 WebApplication app = builder.Build();
 
-app.UseCors("corsLocalHost");
+// app.UseCors("corsLocalHost");
+app.UseCors("AllowAll");
 
 app.ConfigureSwagger();
 
