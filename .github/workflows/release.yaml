@@ -1,0 +1,38 @@
+name: Subir cambios a Release de netcore (Release)
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  UploadChanges:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Subir cambios a netcore
+        uses: actions/checkout@v2
+        with:
+          repository: Castellano-SVN/NetcoreActivoFijo
+          token: ${{ secrets.ACCESSTOKEN }}
+      - name: Copiar archivos del repositorio actual
+        run: cp -r !(.github) .
+      - name: Commit y push cambios
+        run: |
+          git config --global user.email "cesar.laraperalta@gmail.com"
+          git config --global user.name "Cesar lara@automationGITHUB-ACTION"
+          git add .
+          git commit -m "Subir release->develop"
+          git push origin develop
+  
+  PullRequestToRelease:
+    runs-on: ubuntu-latest
+    steps:
+      - name: PR
+        env: 
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/Castellano-SVN/NetcoreActivoFijo/pulls \
+            -d '{"title": "Pull Request desde Release", "body": "Descripción del pull request", "head": "develop", "base": "release"}'
