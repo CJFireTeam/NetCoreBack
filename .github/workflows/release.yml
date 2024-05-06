@@ -26,6 +26,7 @@ jobs:
   
   PullRequestToRelease:
     runs-on: ubuntu-latest
+    needs: UploadChanges
     steps:
       - name: PR
         env: 
