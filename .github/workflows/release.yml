@@ -15,7 +15,7 @@ jobs:
           repository: Castellano-SVN/NetcoreActivoFijo
           token: ${{ secrets.ACCESSTOKEN }}
       - name: Copiar archivos del repositorio actual
-        run: cp -r !(.github) .
+        run: rsync -av --exclude='.github' ./ .
       - name: Commit y push cambios
         run: |
           git config --global user.email "cesar.laraperalta@gmail.com"
