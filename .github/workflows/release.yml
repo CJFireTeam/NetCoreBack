@@ -1,20 +1,22 @@
-name: CI
-
-on:
-  push:
-    branches: [ release ]
-
+name: deploy-me
+'on':
+    - push
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pushes to another repository
-        uses: vinayb21/github-action-push-to-another-repo@master
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          source-directory: '.'
-          destination-github-username: 'Castellano-SVN'
-          destination-repository-name: 'NetcoreActivoFijo'
-          user-email: cesar.laraperalta@gmail.com
-          commit-message: UPDATE BOT
+    deploy-me:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              env:
+                  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+            - run: |
+                  cd lib
+                  git config --global user.email "cesar.laraperalta@gmail.com"
+                  git config --global user.name "Cesar lara@automationGITHUB-ACTION"
+                  git config --global credential.helper cache
+                  git clone https://${{secrets.GITHUB_TOKEN}}@github.com/Castellano-SVN/NetcoreActivoFijo
+                  cp . NetcoreActivoFijo/ -f
+                  cd NetcoreActivoFijo
+                  rm .github
+                  git add .
+                  git commit -m "$(date)"
+                  git push
