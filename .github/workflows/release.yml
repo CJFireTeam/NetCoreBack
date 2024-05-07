@@ -9,11 +9,13 @@ jobs:
               env:
                   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
             - run: |
+                  mkdir dir
+                  mv . dir
                   ls
                   git config --global user.email "cesar.laraperalta@gmail.com"
                   git config --global user.name "Cesar lara@automationGITHUB-ACTION"
                   git config --global credential.helper cache
-                  git clone https://${{secrets.GITHUB_TOKEN}}@github.com/Castellano-SVN/NetcoreActivoFijo
+                  git clone git@github.com:Castellano-SVN/NetcoreActivoFijo.git
                   cp . NetcoreActivoFijo/ -f
                   cd NetcoreActivoFijo
                   rm .github
