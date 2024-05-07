@@ -1,39 +1,29 @@
-name: Subir cambios a Release de netcore (Release)
+name: CI
 
 on:
   push:
-    branches:
-      - release
+    branches: [ release ]
 
 jobs:
-  UploadChanges:
+  build:
     runs-on: ubuntu-latest
+    container: pandoc/latex    # "ubuntu" is a more generic container
+                               # using "pandoc/latex" because of dependencies
+                               # used in the specific "build.sh"
     steps:
-      - name: Subir cambios a netcore
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: creates output
+        run:  sh ./build.sh # some command from your repository that creates
+                            # output to "source-directory" ("output" in the example)
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.ACCESSTOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repository: Castellano-SVN/NetcoreActivoFijo
-          token: ${{ secrets.ACCESSTOKEN }}
-      - name: Copiar archivos del repositorio actual
-        run: rsync -av --exclude='.github' ./ .
-      - name: Commit y push cambios
-        run: |
-          git config --global user.email "cesar.laraperalta@gmail.com"
-          git config --global user.name "Cesar lara@automationGITHUB-ACTION"
-          git add .
-          git commit -m "Subir release->develop"
-          git push origin develop
-  
-  PullRequestToRelease:
-    runs-on: ubuntu-latest
-    needs: UploadChanges
-    steps:
-      - name: PR
-        env: 
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            curl -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/Castellano-SVN/NetcoreActivoFijo/pulls \
-            -d '{"title": "Pull Request desde Release", "body": "Descripción del pull request", "head": "develop", "base": "release"}'
+          source-directory: 'output'
+          destination-github-username: 'Castellano-SVN'
+          destination-repository-name: 'NetcoreActivoFijo'
+          user-email: cesar.laraperalta@gmail.com
+          user-name: Cesar@BOT
+          target-branch: release
