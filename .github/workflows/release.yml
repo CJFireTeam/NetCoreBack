@@ -9,7 +9,7 @@ jobs:
               env:
                   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
             - run: |
-                  cd lib
+                  ls
                   git config --global user.email "cesar.laraperalta@gmail.com"
                   git config --global user.name "Cesar lara@automationGITHUB-ACTION"
                   git config --global credential.helper cache
