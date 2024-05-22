@@ -57,7 +57,7 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetOneAlmacenes(Netcore.ActivoFijo.Model.Context context,Guid Id)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Almacen> GetOneAlmacenes(Netcore.ActivoFijo.Model.Context context, Guid Id)
         {
             return
                 from almacen in context.Almacens
@@ -108,7 +108,7 @@ namespace Netcore.ActivoFijo
                 from articulo in context.Articulos
                 select articulo;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context,Guid id, int page, int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context, Guid id, int page, int elementsPerPage)
         {
             return context.Articulos
                 .Where(a => a.Id == id)
@@ -283,6 +283,14 @@ namespace Netcore.ActivoFijo
             return
                 from cuenta in context.Cuenta
                 select cuenta;
+        }
+
+        internal static IQueryable<Netcore.ActivoFijo.Model.Cuentum> GetCuentums(Netcore.ActivoFijo.Model.Context context, Guid empresaId, int anoNumero)
+        {
+            return context.Cuenta
+                .Where(a => a.EmpresaId == empresaId)
+                .Where(a => a.AnoNumero == anoNumero);
+
         }
 
         #endregion    
