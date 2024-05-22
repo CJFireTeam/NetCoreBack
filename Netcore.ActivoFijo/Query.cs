@@ -475,7 +475,7 @@ namespace Netcore.ActivoFijo
 
         #region Locacion
 
-        internal static IQueryable<Netcore.ActivoFijo.Model.Locacion> GetLocaciones(Netcore.ActivoFijo.Model.Context context)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Locacion> GetLocaciones(Netcore.ActivoFijo.Model.Context context, string id)
         {
             return
                 from locacion in context.Locacions
