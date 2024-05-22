@@ -19,6 +19,35 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
         }
 
+        public async Task<IResult> GetById(string id)
+        {
+            LocacionModel Model = new LocacionModel();
+
+            Model.Success = true;
+
+            try
+            {
+                List<Netcore.ActivoFijo.Business.Locacion> business = await Netcore.ActivoFijo.Business.Locacion.GetAllAsync(this._context, id);
+
+                List<LocacionDTO> listDTO = business.Select(t => t.Adapt<LocacionDTO>()).ToList();
+
+                Model.Code = (int)StatusCodes.Status200OK;
+                Model.DataList = listDTO;
+
+                return Results.Ok(Model);
+            }
+            catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
+
         public async Task<IResult> Get(int page, int perPage)
         {
             LocacionModel Model = new LocacionModel();
