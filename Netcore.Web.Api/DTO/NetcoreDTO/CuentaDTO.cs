@@ -33,9 +33,9 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public bool Caja { get; set; }
         public bool ActivoCirculante { get; set; }
         public bool PasivoCirculante { get; set; }
-        public bool CorrecionMonetaria { get; set; }
+        public bool CorreccionMonetaria { get; set; }
         public bool Gav { get; set; }
-        public bool Panta { get; set; }
+        public bool Planta { get; set; }
         public bool Contrata { get; set; }
         public bool ImpuestoRenta { get; set; }
         public bool DevolucionFondo { get; set; }
