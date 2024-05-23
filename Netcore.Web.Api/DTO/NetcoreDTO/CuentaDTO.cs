@@ -45,7 +45,7 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public int? TipoGastoOperacionalCodigo { get; set; }
         public int? TipoCuentaEstadoResultadoCodigo  { get; set; }
         public bool CuentaPatrimonio { get; set; }
-        public bool CuentaContabilizalva { get; set; }
+        public bool CuentaContabilizaIva { get; set; }
         
 
 
