@@ -29,6 +29,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
+                
                 List<Netcore.ActivoFijo.Business.TipoLocacion> business = await Netcore.ActivoFijo.Business.TipoLocacion.GetAllAsync(this._context, id);
 
                 List<TipoLocacionDTO> listDTO = business.Select(t => t.Adapt<TipoLocacionDTO>()).ToList();
@@ -59,8 +60,13 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-                // Netcore.ActivoFijo.Business.TipoLocacion business = await Netcore.ActivoFijo.Business.TipoLocacion.Insert(this._context, tipoLocacionDTO.Codigo, tipoLocacionDTO.Nombre);
-                // TipoLocacionDTO dto = business.Adapt<TipoLocacionDTO>();
+                if (!Guid.TryParse(tipoLocacionDTO.EmpresaId, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                Netcore.ActivoFijo.Business.TipoLocacion business = await Netcore.ActivoFijo.Business.TipoLocacion.Insert(this._context, guID, tipoLocacionDTO.Nombre);
+                TipoLocacionDTO dto = business.Adapt<TipoLocacionDTO>();
 
                 Model.Code = (int)StatusCodes.Status200OK;
                 // Model.Data = dto;
