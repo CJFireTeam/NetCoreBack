@@ -19,7 +19,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
         }
 
-        public async Task<IResult> GetById(string id)
+        public async Task<IResult> GetOne(string id)
         {
             LocacionModel Model = new LocacionModel();
 
@@ -27,13 +27,15 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-                List<Netcore.ActivoFijo.Business.Locacion> business = await Netcore.ActivoFijo.Business.Locacion.GetAllAsync(this._context, id);
-
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.Locacion> business = await Netcore.ActivoFijo.Business.Locacion.GetOne(this._context, guID);
                 List<LocacionDTO> listDTO = business.Select(t => t.Adapt<LocacionDTO>()).ToList();
-
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
-
                 return Results.Ok(Model);
             }
             catch (Exception ex)

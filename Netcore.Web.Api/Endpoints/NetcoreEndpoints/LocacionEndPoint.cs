@@ -45,15 +45,18 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
 
             endpoints.MapGet("/api/locacion/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
-                LocacionController LocacionController = new LocacionController(httpContext, context);
-                string id = httpContext.Request.Query["id"].FirstOrDefault();
-                return await LocacionController.GetById(id);
+                string id = (httpContext.Request.RouteValues["id"].ToString());
 
-            }).Produces<TipoLocacionModel>(StatusCodes.Status200OK)
-              .Produces<TipoLocacionModel>(StatusCodes.Status400BadRequest)
-              .Produces<TipoLocacionModel>(StatusCodes.Status401Unauthorized)
-              .Produces<TipoLocacionModel>(StatusCodes.Status403Forbidden)
-              .Produces<TipoLocacionModel>(StatusCodes.Status500InternalServerError);
+                LocacionController controller = new LocacionController(httpContext, context);
+
+                return await controller.GetOne(id);
+
+            }).Produces<CentroCostoModel>(StatusCodes.Status200OK)
+              .Produces<CentroCostoModel>(StatusCodes.Status400BadRequest)
+              .Produces<CentroCostoModel>(StatusCodes.Status401Unauthorized)
+              .Produces<CentroCostoModel>(StatusCodes.Status403Forbidden)
+              .Produces<CentroCostoModel>(StatusCodes.Status500InternalServerError);
+
 
             return endpoints;
         }
