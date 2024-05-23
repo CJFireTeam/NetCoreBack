@@ -9,5 +9,7 @@ public partial class TipoLocacion
 
     public Guid Id { get; set; }
 
+    public string Nombre { get; set; } = null!;
+
     public virtual ICollection<Locacion> Locacions { get; set; } = new List<Locacion>();
 }
