@@ -487,6 +487,16 @@ namespace Netcore.ActivoFijo
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
+        internal static IQueryable<Netcore.ActivoFijo.Model.Locacion> GetLocacionesOne(Netcore.ActivoFijo.Model.Context context, Guid id)
+        {
+            return
+                from locacion in context.Locacions
+                where locacion.Id == id
+                select locacion;
+        }
+        #endregion
+
+        #region AnoMes
         #endregion
 
         #region Mes
