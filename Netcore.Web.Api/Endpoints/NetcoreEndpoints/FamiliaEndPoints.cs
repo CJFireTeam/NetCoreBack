@@ -34,7 +34,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
                 string id = (httpContext.Request.RouteValues["id"].ToString());
 
                 int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
-                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
+                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "6");
                 FamiliaController controller = new FamiliaController(httpContext, context);
 
                 return await controller.Get(id,page,perPage);
