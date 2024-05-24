@@ -419,7 +419,7 @@ namespace Netcore.ActivoFijo
         internal static IQueryable<Netcore.ActivoFijo.Model.Familium> GetFamiliasPaginated(Netcore.ActivoFijo.Model.Context context, Guid id, int page, int elementsPerPage)
         {
             return context.Familia
-                .Where(a => a.Id == id)
+                .Where(a => a.EmpresaId == id)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
