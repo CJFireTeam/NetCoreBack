@@ -44,6 +44,21 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<FamiliaModel>(StatusCodes.Status401Unauthorized)
               .Produces<FamiliaModel>(StatusCodes.Status403Forbidden)
               .Produces<FamiliaModel>(StatusCodes.Status500InternalServerError);
+            endpoints.MapGet("/api/familia/{empresa}/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            {
+                string id = (httpContext.Request.RouteValues["id"].ToString());
+                string empresa = (httpContext.Request.RouteValues["empresa"].ToString());
+                int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
+                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "6");
+                FamiliaController controller = new FamiliaController(httpContext, context);
+
+                return await controller.GetOne(id,empresa);
+
+            }).Produces<FamiliaModel>(StatusCodes.Status200OK)
+              .Produces<FamiliaModel>(StatusCodes.Status400BadRequest)
+              .Produces<FamiliaModel>(StatusCodes.Status401Unauthorized)
+              .Produces<FamiliaModel>(StatusCodes.Status403Forbidden)
+              .Produces<FamiliaModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }

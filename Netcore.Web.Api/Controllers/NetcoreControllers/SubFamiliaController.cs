@@ -22,7 +22,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> Get(int page, int perPage)
+        public async Task<IResult> Get(string id,int page, int perPage)
         {
             SubFamiliaModel Model = new SubFamiliaModel();
 
@@ -30,9 +30,12 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-
-                List<Netcore.ActivoFijo.Business.SubFamilia> business = await Netcore.ActivoFijo.Business.SubFamilia.GetAllAsyncPaginated(this._context, page, perPage);
-                int count = Netcore.ActivoFijo.Business.SubFamilia.GetCount(this._context);
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.SubFamilia> business = await Netcore.ActivoFijo.Business.SubFamilia.GetAllAsyncPaginated(this._context,guID, page, perPage);
+                int count = Netcore.ActivoFijo.Business.SubFamilia.GetCount(this._context,guID);
                 List<SubFamiliaDTO> listDTO = business.Select(t => t.Adapt<SubFamiliaDTO>()).ToList();
                 Model.Pages = (int)Math.Ceiling((double)count / perPage);
                 Model.Total = count;

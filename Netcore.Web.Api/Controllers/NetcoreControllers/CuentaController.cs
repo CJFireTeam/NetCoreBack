@@ -17,7 +17,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
             this._context = context;
         }
 
-        public async Task<IResult> GetCuenta(int anoNumero, string empresaId)
+        public async Task<IResult> GetCuenta(string id)
         {
             CuentaModel CuentaModel = new CuentaModel();
 
@@ -25,13 +25,13 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-                if (!Guid.TryParse(empresaId, out Guid guID))
+                if (!Guid.TryParse(id, out Guid guID))
                 {
 
                     // Manejo de error si la conversión falla
                     throw new Exception("El valor proporcionado no es un GUID válido.");
                 }
-                List<Netcore.ActivoFijo.Business.Cuenta> Cuenta = await Netcore.ActivoFijo.Business.Cuenta.GetAllAsyncCuenta(this._context,guID,anoNumero);
+                List<Netcore.ActivoFijo.Business.Cuenta> Cuenta = await Netcore.ActivoFijo.Business.Cuenta.GetAllAsyncCuenta(this._context,guID);
                 
                 List<CuentaDTO> listDTO = Cuenta.Adapt<List<CuentaDTO>>();
 

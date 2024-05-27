@@ -20,7 +20,42 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
         }
 
+        public async Task<IResult> GetOne(string id, string empresa)
+        {
+            FamiliaModel Model = new FamiliaModel();
 
+            Model.Success = true;
+
+            try
+            {
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                if (!Guid.TryParse(empresa, out Guid guIDEmpresa))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.Familia> business = await Netcore.ActivoFijo.Business.Familia.GetOneAsync(this._context,guID,guIDEmpresa);
+                List<FamiliaDTO> listDTO = business.Select(t => t.Adapt<FamiliaDTO>()).ToList();
+                if (listDTO.Count() != 1) throw new Exception("Ocurrio un error al buscar familia");
+                Model.Data = listDTO[0];
+                Model.Code = (int)StatusCodes.Status200OK;
+                
+                return Results.Ok(Model);
+            }catch (Exception ex)
+            {
+                Model.Success = false;
+                Model.Status = "ERROR";
+                Model.SubStatus = "ERROR";
+                Model.Message = ex.Message;
+                Model.Code = (int)StatusCodes.Status500InternalServerError;
+
+                return Results.BadRequest(Model);
+            }
+        }
 
         public async Task<IResult> Get(string id, int page, int perPage)
         {
@@ -36,7 +71,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
                     throw new Exception("El valor proporcionado no es un GUID válido.");
                 }
                 List<Netcore.ActivoFijo.Business.Familia> business = await Netcore.ActivoFijo.Business.Familia.GetAllAsyncPaginated(this._context,guID,page,perPage);
-                int count = Netcore.ActivoFijo.Business.Familia.GetCount(this._context);                
+                int count = Netcore.ActivoFijo.Business.Familia.GetCount(this._context,guID);                
                 List<FamiliaDTO> listDTO = business.Select(t => t.Adapt<FamiliaDTO>()).ToList();
                 Model.Pages = (int)Math.Ceiling((double)count / perPage);
                 Model.Total = count;

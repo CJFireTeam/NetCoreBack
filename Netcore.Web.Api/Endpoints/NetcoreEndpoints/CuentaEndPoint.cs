@@ -10,13 +10,12 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
     {
         public IEndpointRouteBuilder AddRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/api/cuenta", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/cuenta/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
-                int anoNumero = Convert.ToInt32(httpContext.Request.Query["years"].FirstOrDefault());
-                string empresa = httpContext.Request.Query["empresa"].FirstOrDefault();
+                string id = (httpContext.Request.RouteValues["id"].ToString());
                 CuentaController cuentaController = new CuentaController(httpContext, context);
 
-                return await cuentaController.GetCuenta( anoNumero, empresa);
+                return await cuentaController.GetCuenta(id);
 
             }).Produces<ComunaModel>(StatusCodes.Status200OK)
               .Produces<ComunaModel>(StatusCodes.Status400BadRequest)

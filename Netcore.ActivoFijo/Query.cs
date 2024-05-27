@@ -285,11 +285,10 @@ namespace Netcore.ActivoFijo
                 select cuenta;
         }
 
-        internal static IQueryable<Netcore.ActivoFijo.Model.Cuentum> GetCuentums(Netcore.ActivoFijo.Model.Context context, Guid empresaId, int anoNumero)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Cuentum> GetCuentums(Netcore.ActivoFijo.Model.Context context, Guid empresaId)
         {
             return context.Cuenta
-                .Where(a => a.EmpresaId == empresaId)
-                .Where(a => a.AnoNumero == anoNumero);
+                .Where(a => a.EmpresaId == empresaId);
 
         }
 
@@ -422,6 +421,15 @@ namespace Netcore.ActivoFijo
                 .Where(a => a.EmpresaId == id)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
+        }
+
+        internal static IQueryable<Netcore.ActivoFijo.Model.Familium> GetFamiliasOne(Netcore.ActivoFijo.Model.Context context, Guid id, Guid Empresa)
+        {
+                
+                var data = from familia in context.Familia
+                where familia.EmpresaId == Empresa && familia.Id == id
+                select familia;
+                return data;
         }
 
         #endregion
@@ -762,9 +770,10 @@ namespace Netcore.ActivoFijo
                 from subFamilia in context.SubFamilia
                 select subFamilia;
         }
-        internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.SubFamilium> GetSubFamiliasPaginated(Netcore.ActivoFijo.Model.Context context,Guid id, int page, int elementsPerPage)
         {
             return context.SubFamilia
+                .Where(e => e.FamiliaId == id)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }

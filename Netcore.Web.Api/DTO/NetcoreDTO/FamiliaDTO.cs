@@ -1,3 +1,5 @@
+using Netcore.ActivoFijo.Business;
+
 namespace Netcore.Web.Api.DTO.NetcoreDTO
 {
     public class FamiliaDTO
@@ -9,6 +11,10 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public Boolean Eliminado { get; set; }
-        
+
+        public static implicit operator FamiliaDTO(Familia v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

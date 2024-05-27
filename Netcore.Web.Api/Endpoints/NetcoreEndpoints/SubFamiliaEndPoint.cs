@@ -44,32 +44,33 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<SubFamiliaModel>(StatusCodes.Status401Unauthorized)
               .Produces<SubFamiliaModel>(StatusCodes.Status403Forbidden)
               .Produces<SubFamiliaModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapGet("/api/subFamilia", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            {
+            endpoints.MapGet("/api/subFamilia/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            { 
+                string id = (httpContext.Request.RouteValues["id"].ToString());
                 int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
                 int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
                 SubFamiliaController controller = new SubFamiliaController(httpContext, context);
 
-                return await controller.Get(page, perPage);
+                return await controller.Get(id,page, perPage);
 
             }).Produces<SubFamiliaModel>(StatusCodes.Status200OK)
               .Produces<SubFamiliaModel>(StatusCodes.Status400BadRequest)
               .Produces<SubFamiliaModel>(StatusCodes.Status401Unauthorized)
               .Produces<SubFamiliaModel>(StatusCodes.Status403Forbidden)
               .Produces<SubFamiliaModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapGet("/api/subFamilia/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
-            {
-                  string id = (httpContext.Request.RouteValues["id"].ToString());
+            // endpoints.MapGet("/api/subFamilia/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            // {
+            //       string id = (httpContext.Request.RouteValues["id"].ToString());
 
-                SubFamiliaController controller = new SubFamiliaController(httpContext, context);
+            //     SubFamiliaController controller = new SubFamiliaController(httpContext, context);
 
-                return await controller.GetOne(id);
+            //     return await controller.GetOne(id);
 
-            }).Produces<SubFamiliaModel>(StatusCodes.Status200OK)
-              .Produces<SubFamiliaModel>(StatusCodes.Status400BadRequest)
-              .Produces<SubFamiliaModel>(StatusCodes.Status401Unauthorized)
-              .Produces<SubFamiliaModel>(StatusCodes.Status403Forbidden)
-              .Produces<SubFamiliaModel>(StatusCodes.Status500InternalServerError);
+            // }).Produces<SubFamiliaModel>(StatusCodes.Status200OK)
+            //   .Produces<SubFamiliaModel>(StatusCodes.Status400BadRequest)
+            //   .Produces<SubFamiliaModel>(StatusCodes.Status401Unauthorized)
+            //   .Produces<SubFamiliaModel>(StatusCodes.Status403Forbidden)
+            //   .Produces<SubFamiliaModel>(StatusCodes.Status500InternalServerError);
 
             return endpoints;
         }

@@ -4,6 +4,6 @@ namespace Netcore.Web.Api.Services.NetCoreServices
 {
     public interface ICuenta
     {
-        Task<IResult>GetCuenta(int anoNumero, string empresaId);
+        Task<IResult>GetCuenta(string id);
     }
 }
