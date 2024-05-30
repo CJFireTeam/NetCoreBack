@@ -32,8 +32,6 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public CentroCostoDTO_EMPRESA? Empresa { get; set; }
         public PersonaDTO? Administrador { get; set; }
         public CentroCostoDTO_BODEGAS[]? Bodegas { get; set; }
-
-
     }
 
     public class CentroCostoDTO_EMPRESA {

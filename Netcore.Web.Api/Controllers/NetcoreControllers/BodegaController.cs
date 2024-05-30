@@ -22,7 +22,7 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
 
 
-        public async Task<IResult> Get(int page, int perPage)
+        public async Task<IResult> Get(string id)
         {
             BodegaModel Model = new BodegaModel();
 
@@ -30,12 +30,13 @@ namespace Netcore.Web.Api.Controllers.NetcoreControllers
 
             try
             {
-
-                List<Netcore.ActivoFijo.Business.Bodega> business = await Netcore.ActivoFijo.Business.Bodega.GetAllAsyncPaginated(this._context, page, perPage);
-                int count = Netcore.ActivoFijo.Business.Bodega.GetCount(this._context);
+                if (!Guid.TryParse(id, out Guid guID))
+                {
+                    // Manejo de error si la conversión falla
+                    throw new Exception("El valor proporcionado no es un GUID válido.");
+                }
+                List<Netcore.ActivoFijo.Business.Bodega> business = await Netcore.ActivoFijo.Business.Bodega.GetAllAsyncPaginated(this._context, guID);
                 List<BodegaDTO> listDTO = business.Select(t => t.Adapt<BodegaDTO>()).ToList();
-                Model.Pages = (int)Math.Ceiling((double)count / perPage);
-                Model.Total = count;
                 Model.Code = (int)StatusCodes.Status200OK;
                 Model.DataList = listDTO;
 

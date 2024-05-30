@@ -8,7 +8,7 @@
         public string Nombre { get; set; } = null!;
         public string? Sigla { get; set; }
         public string? Descripcion { get; set; }
-        public EmpresaDTO? Empresa { get; set; }
+        // public EmpresaDTO? Empresa { get; set; }
 
     }
 }

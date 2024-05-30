@@ -111,7 +111,7 @@ namespace Netcore.ActivoFijo
         internal static IQueryable<Netcore.ActivoFijo.Model.Articulo> GetArticulosPaginated(Netcore.ActivoFijo.Model.Context context, Guid id, int page, int elementsPerPage)
         {
             return context.Articulos
-                .Where(a => a.Id == id)
+                .Where(a => a.EmpresaId == id && a.Eliminado == false)
                 .Skip((page - 1) * elementsPerPage)
                 .Take(elementsPerPage);
         }
@@ -632,11 +632,13 @@ namespace Netcore.ActivoFijo
         }
         #endregion
 
-        internal static IQueryable<Netcore.ActivoFijo.Model.Bodega> GetBodegasPaginated(Netcore.ActivoFijo.Model.Context context, int page, int elementsPerPage)
+        internal static IQueryable<Netcore.ActivoFijo.Model.Bodega> GetBodegasPaginated(Netcore.ActivoFijo.Model.Context context, Guid id)
         {
-            return context.Bodegas
-                .Skip((page - 1) * elementsPerPage)
-                .Take(elementsPerPage);
+            return
+                from Bodega in context.Bodegas
+                where Bodega.CentroCostoId == id
+                select Bodega;
+        
         }
 
         #region PostTitulo

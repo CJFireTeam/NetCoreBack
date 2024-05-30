@@ -11,6 +11,11 @@ namespace Netcore.Web.Api.DTO.NetcoreDTO
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public Boolean Eliminado { get; set; }
+        public Articulo_valors[] ArticuloValors {get;set;}
 
     }
+        public class Articulo_valors {
+            public float Valor {get;set;}
+
+        }
 }

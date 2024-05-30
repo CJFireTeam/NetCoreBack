@@ -28,7 +28,7 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
             //   .Produces<BodegaModel>(StatusCodes.Status401Unauthorized)
             //   .Produces<BodegaModel>(StatusCodes.Status403Forbidden)
             //   .Produces<BodegaModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapPost("/api/Bodega", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapPost("/api/bodega", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
                 var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
 
@@ -44,13 +44,13 @@ namespace Netcore.Web.Api.Endpoints.NetcoreEndpoints
               .Produces<BodegaModel>(StatusCodes.Status401Unauthorized)
               .Produces<BodegaModel>(StatusCodes.Status403Forbidden)
               .Produces<BodegaModel>(StatusCodes.Status500InternalServerError);
-            endpoints.MapGet("/api/Bodega", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
+            endpoints.MapGet("/api/bodega/{id}", [Authorize] async (HttpContext httpContext, Netcore.ActivoFijo.Model.Context context) =>
             {
-                int page = Convert.ToInt32(httpContext.Request.Query["page"].FirstOrDefault() ?? "1");
-                int perPage = Convert.ToInt32(httpContext.Request.Query["perPage"].FirstOrDefault() ?? "5");
+                string id = (httpContext.Request.RouteValues["id"].ToString());
+
                 BodegaController controller = new BodegaController(httpContext, context);
 
-                return await controller.Get(page, perPage);
+                return await controller.Get(id);
 
             }).Produces<BodegaModel>(StatusCodes.Status200OK)
               .Produces<BodegaModel>(StatusCodes.Status400BadRequest)
